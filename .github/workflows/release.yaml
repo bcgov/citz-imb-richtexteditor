@@ -58,7 +58,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.bump_version.outputs.VERSION }}
+          tag_name: v${{ steps.package_version.outputs.VERSION }}
           name: ${{ github.event.inputs.releaseTitle }}
           body: ${{ env.CHANGELOG }}
         env:
@@ -69,8 +69,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./releases/bcgov-citz-imb-richtexteditor-${{ steps.bump_version.outputs.VERSION }}.tgz
-          asset_name: bcgov-citz-imb-richtexteditor-${{ steps.bump_version.outputs.VERSION }}.tgz
+          asset_path: ./releases/bcgov-citz-imb-richtexteditor-${{ steps.package_version.outputs.VERSION }}.tgz
+          asset_name: bcgov-citz-imb-richtexteditor-${{ steps.package_version.outputs.VERSION }}.tgz
           asset_content_type: application/gzip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
