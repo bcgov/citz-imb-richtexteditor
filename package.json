@@ -1,6 +1,6 @@
 {
   "name": "@bcgov/citz-imb-richtexteditor",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "BCGov Rich Text Editor for React",
   "author": "Brady Mitchell <braden.mitchell@gov.bc.ca>",
   "license": "Apache-2.0",
@@ -8,8 +8,9 @@
   "types": "build/index.d.ts",
   "type": "module",
   "scripts": {
-    "bundle:dts": "node bundle-dts.js && rollup -c rollup.config.js && node remove-dts.js && rm build/utils/*.d.ts",
-    "build": "rm -rf build && tsc && npm run bundle:dts && rm tsconfig.tsbuildinfo && cp src/styles.css build/styles.css",
+    "bundle:dts": "node bundle-dts.js && rollup -c rollup.config.js && node remove-dts.js && rm build/utils/*.d.ts && rm build/assets/*.d.ts",
+    "build:cp": "cp src/styles.css build/styles.css && cp src/assets/*.svg build/assets",
+    "build": "rm -rf build && tsc && npm run bundle:dts && rm tsconfig.tsbuildinfo && npm run build:cp",
     "pack": "npm i && npm run build && npm cache clean --force && npm pack && mkdir -p releases && mv *.tgz ./releases/"
   },
   "dependencies": {

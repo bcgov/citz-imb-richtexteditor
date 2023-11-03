@@ -43,7 +43,7 @@
 ``` JSON5
 {
   "dependencies": {
-    "@bcgov/citz-imb-richtexteditor": "https://github.com/bcgov/citz-imb-richtexteditor/releases/download/<VERSION>/bcgov-citz-imb-richtexteditor-<VERSION>.tgz",
+    "@bcgov/citz-imb-richtexteditor": "https://github.com/bcgov/citz-imb-richtexteditor/releases/download/v<VERSION>/bcgov-citz-imb-richtexteditor-<VERSION>.tgz",
     // The rest of your dependencies...
   },
 }
