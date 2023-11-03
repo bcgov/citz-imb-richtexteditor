@@ -25,11 +25,20 @@ jobs:
       - name: Bump version
         run: node .github/helpers/bump-version.js ${{ github.event.inputs.versionType }}
 
+      # Commit the bumped version in package.json
+      - name: Commit version bump
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json
+          git commit -m "Release: bump version to ${{ steps.package_version.outputs.VERSION }}"
+          git push
+
       # Create changelog
       - name: Create changelog from commits
         id: changelog
         run: |
-          echo "CHANGELOG=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" | sed ':a;N;$!ba;s/\n/, /g')" >> $GITHUB_ENV
+          echo "CHANGELOG=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:'%h - %s')" >> $GITHUB_ENV
 
       # Package code
       - name: Run npm pack
@@ -41,24 +50,23 @@ jobs:
         run: echo "::set-output name=VERSION::$(node -p "require('./package.json').version")"
 
       # Create new release
-      - name: Create Release
-        uses: actions/create-release@v1
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.bump_version.outputs.VERSION }}
+          name: ${{ github.event.inputs.releaseTitle }}
+          body: ${{ env.CHANGELOG }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.package_version.outputs.VERSION }}
-          release_name: ${{ github.event.inputs.releaseTitle }}
-          body: ${{ env.CHANGELOG }}
-          draft: false
-          prerelease: false
 
       # Upload packaged code
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./releases/bcgov-citz-imb-richtexteditor-${{ steps.package_version.outputs.VERSION }}.tgz
-          asset_name: bcgov-citz-imb-richtexteditor-${{ steps.package_version.outputs.VERSION }}.tgz
+          asset_path: ./releases/bcgov-citz-imb-richtexteditor-${{ steps.bump_version.outputs.VERSION }}.tgz
+          asset_name: bcgov-citz-imb-richtexteditor-${{ steps.bump_version.outputs.VERSION }}.tgz
           asset_content_type: application/gzip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
