@@ -7,7 +7,7 @@
 [![Typescript](https://img.shields.io/badge/TypeScript_5-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](Typescript)
 [![React](https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=for-the-badge)](React)
 
-<br />
+Originally created by IMB developers working on the [DPIA] product.
 
 <details>
 <summary><h2>TL/DR</h2></summary>
@@ -84,3 +84,4 @@ const MyComponent = () => {
 <!-- Link References -->
 
 [releases]: https://github.com/bcgov/citz-imb-richtexteditor/releases
+[DPIA]: https://github.com/bcgov/cirmo-dpia
