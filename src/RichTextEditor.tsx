@@ -1,4 +1,5 @@
 import "./styles.css";
+import { ListIcon } from "./assets";
 import React, { useRef, useEffect } from "react";
 import { HTMLTag, RichTextEditorProps } from "./types";
 import {
@@ -260,13 +261,10 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
           <s>S</s>
         </button>
         <button className="button" onClick={() => toggleHeaderStyle()}>
-          H
+          <b>H</b>
         </button>
         <button className="button" onClick={() => toggleListStyle()}>
-          •
-        </button>
-        <button className="button" onClick={() => setContent("")}>
-          Clear
+          <img src={ListIcon} alt="List Icon" className="icon" />
         </button>
       </div>
       <div
@@ -276,7 +274,6 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         onKeyDown={handleKeyDown}
         className="content"
       />
-      <p>{content}</p>
     </div>
   );
 };

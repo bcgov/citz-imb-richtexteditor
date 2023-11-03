@@ -15,8 +15,17 @@ function processDirectory(directory) {
       processDirectory(filePath); // Recursively inspect the directory
     } else if (file.endsWith(".d.ts")) {
       let declaration = readFileSync(filePath, "utf8");
+
       // Remove CSS imports
       declaration = declaration.replace(/import\s+['"].+\.css['"];/g, "");
+
+      // Remove SVG imports/exports
+      declaration = declaration.replace(/import\s+['"].+\.svg['"];/g, "");
+      declaration = declaration.replace(
+        /export\s+{.*}.*from\s+['"].+\.svg['"];\s*$/gm,
+        ""
+      );
+
       writeFileSync(filePath, declaration);
 
       const relativePath = filePath.substring(
