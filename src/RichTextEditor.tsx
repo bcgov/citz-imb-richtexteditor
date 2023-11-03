@@ -247,33 +247,25 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
     }
   }, [content]);
 
-  const handleClear = () => setContent("");
-
-  const toggleBold = () => toggleStyle("B");
-  const toggleItalic = () => toggleStyle("I");
-  const toggleStrikethrough = () => toggleStyle("S");
-  const toggleHeader = () => toggleHeaderStyle();
-  const toggleList = () => toggleListStyle();
-
   return (
     <div className="container">
       <div className="toolbar">
-        <button className="button" onClick={toggleBold}>
+        <button className="button" onClick={() => toggleStyle("B")}>
           <b>B</b>
         </button>
-        <button className="button" onClick={toggleItalic}>
+        <button className="button" onClick={() => toggleStyle("I")}>
           <i>I</i>
         </button>
-        <button className="button" onClick={toggleStrikethrough}>
+        <button className="button" onClick={() => toggleStyle("S")}>
           <s>S</s>
         </button>
-        <button className="button" onClick={toggleHeader}>
+        <button className="button" onClick={() => toggleHeaderStyle()}>
           H
         </button>
-        <button className="button" onClick={toggleList}>
+        <button className="button" onClick={() => toggleListStyle()}>
           •
         </button>
-        <button className="button" onClick={handleClear}>
+        <button className="button" onClick={() => setContent("")}>
           Clear
         </button>
       </div>

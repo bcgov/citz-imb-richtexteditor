@@ -1,1 +1,1 @@
-export const Placeholder = "";
+export { RichTextEditor } from "./RichTextEditor";
