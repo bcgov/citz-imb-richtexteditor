@@ -38,7 +38,9 @@ jobs:
       - name: Create changelog from commits
         id: changelog
         run: |
-          echo "CHANGELOG=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:'%h - %s')" >> $GITHUB_ENV
+          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+          git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       # Package code
       - name: Run npm pack
