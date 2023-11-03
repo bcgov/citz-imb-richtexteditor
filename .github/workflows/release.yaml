@@ -23,7 +23,9 @@ jobs:
 
       # Bump version number
       - name: Bump version
-        run: node .github/helpers/bump-version.js ${{ github.event.inputs.versionType }}
+        id: bump_version
+        run: |
+          echo "::set-output name=VERSION::$(node .github/helpers/bump-version.js ${{ github.event.inputs.versionType }})"
 
       # Commit the bumped version in package.json
       - name: Commit version bump
@@ -31,7 +33,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add package.json
-          git commit -m "Release: bump version to ${{ steps.package_version.outputs.VERSION }}"
+          git commit -m "Release: bump version to ${{ steps.bump_version.outputs.VERSION }}"
           git push
 
       # Create changelog

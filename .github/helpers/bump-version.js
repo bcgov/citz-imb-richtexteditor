@@ -53,7 +53,7 @@ const updatePackageVersion = (releaseType) => {
     packageJson.version = newVersion;
 
     fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2) + "\n");
-    console.log(`Version bumped from ${oldVersion} to ${newVersion}`);
+    console.log(newVersion);
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1);
