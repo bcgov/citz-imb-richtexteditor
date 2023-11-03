@@ -38,9 +38,11 @@ jobs:
       - name: Create changelog from commits
         id: changelog
         run: |
-          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
-          git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:'%h - %s')
+          changelog="${changelog//'%'/'%25'}" # Escape %
+          changelog="${changelog//$'\n'/'%0A'}" # Replace newlines
+          changelog="${changelog//$'\r'/'%0D'}" # Replace carriage returns
+          echo "CHANGELOG=${changelog}" >> $GITHUB_ENV
 
       # Package code
       - name: Run npm pack
