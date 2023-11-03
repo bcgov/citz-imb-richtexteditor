@@ -9,7 +9,7 @@
   "type": "module",
   "scripts": {
     "bundle:dts": "node bundle-dts.js && rollup -c rollup.config.js && node remove-dts.js && rm build/utils/*.d.ts",
-    "build": "rm -rf build && tsc && npm run bundle:dts && rm tsconfig.tsbuildinfo",
+    "build": "rm -rf build && tsc && npm run bundle:dts && rm tsconfig.tsbuildinfo && cp src/styles.css build/styles.css",
     "pack": "npm i && npm run build && npm cache clean --force && npm pack && mv *.tgz ./releases/"
   },
   "dependencies": {

@@ -14,7 +14,7 @@
 
 1. Install package by following the steps at [Installing the Package](#installing-the-package).
 2. Set up the package by following the steps at [Basic Setup Guide](#basic-setup-guide).
-3. Output is HTML content in string form.
+3. Output is HTML content in string form, not markdown.
 
 </details>
 
@@ -30,7 +30,7 @@
 
 - For running on a NodeJS:20 React 18 app.
 - Works with Vanilla JavaScript or Typescript 5.
-- Output is HTML content in string form.
+- Output is HTML content in string form, not markdown.
 
 ---
 
