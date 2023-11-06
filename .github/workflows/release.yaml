@@ -30,8 +30,8 @@ jobs:
       # Commit the bumped version in package.json
       - name: Commit version bump
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "braden.jr.mitch@gmail.com"
+          git config --local user.name "BradyMitch"
           git add package.json
           git commit -m "Release: bump version to ${{ steps.bump_version.outputs.VERSION }}"
           git push -f https://${{ secrets.RELEASE_ACCESS_TOKEN }}@github.com/${{ github.repository }} HEAD:main
