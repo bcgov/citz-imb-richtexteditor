@@ -21,6 +21,13 @@
   background-color: #e0e0e0;
 }
 
+.button[disabled] {
+  background: #ececec;
+  color: #a0a0a0;
+  border-color: #d0d0d0;
+  cursor: not-allowed;
+}
+
 .content {
   border: 1px solid #ccc;
   padding: 10px;
@@ -41,6 +48,11 @@
 
 .content:focus {
   border-color: #333; /* Darker border when focused */
+}
+
+.contentReadonly {
+  background-color: #f3f3f3;
+  cursor: not-allowed;
 }
 
 .icon {

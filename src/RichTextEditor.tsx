@@ -1,5 +1,5 @@
 import "./styles.css";
-import { ListIcon } from "./assets";
+import { ListIcon, ListIconDisabled } from "./assets";
 import React, { useRef, useEffect } from "react";
 import { HTMLTag, RichTextEditorProps } from "./types";
 import {
@@ -11,7 +11,7 @@ import {
 } from "./utils";
 
 export const RichTextEditor = (props: RichTextEditorProps) => {
-  const { content, setContent } = props;
+  const { content, setContent, readOnly = false } = props;
 
   // Using useRef hook to get a direct reference to the contentEditable div
   const contentRef = useRef<HTMLDivElement>(null);
@@ -245,26 +245,52 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
       if (contentRef.current.innerHTML !== content) {
         contentRef.current.innerHTML = content;
       }
+      // Track readOnly property changes
+      contentRef.current.contentEditable = String(!readOnly);
     }
   }, [content]);
 
   return (
     <div className="container">
       <div className="toolbar">
-        <button className="button" onClick={() => toggleStyle("B")}>
+        <button
+          className="button"
+          disabled={readOnly}
+          onClick={() => toggleStyle("B")}
+        >
           <b>B</b>
         </button>
-        <button className="button" onClick={() => toggleStyle("I")}>
+        <button
+          className="button"
+          disabled={readOnly}
+          onClick={() => toggleStyle("I")}
+        >
           <i>I</i>
         </button>
-        <button className="button" onClick={() => toggleStyle("S")}>
+        <button
+          className="button"
+          disabled={readOnly}
+          onClick={() => toggleStyle("S")}
+        >
           <s>S</s>
         </button>
-        <button className="button" onClick={() => toggleHeaderStyle()}>
+        <button
+          className="button"
+          disabled={readOnly}
+          onClick={() => toggleHeaderStyle()}
+        >
           <b>H</b>
         </button>
-        <button className="button" onClick={() => toggleListStyle()}>
-          <img src={ListIcon} alt="List Icon" className="icon" />
+        <button
+          className="button"
+          disabled={readOnly}
+          onClick={() => toggleListStyle()}
+        >
+          <img
+            src={!readOnly ? ListIcon : ListIconDisabled}
+            alt="List Icon"
+            className="icon"
+          />
         </button>
       </div>
       <div
@@ -272,7 +298,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         contentEditable={true}
         onInput={handleChange}
         onKeyDown={handleKeyDown}
-        className="content"
+        className={`content ${readOnly ? "contentReadonly" : ""}`}
       />
     </div>
   );
