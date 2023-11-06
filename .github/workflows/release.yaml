@@ -34,7 +34,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add package.json
           git commit -m "Release: bump version to ${{ steps.bump_version.outputs.VERSION }}"
-          git push
+          git push -f
 
       # Create changelog
       - name: Create changelog from commits
