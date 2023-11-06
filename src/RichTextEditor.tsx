@@ -245,6 +245,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
       if (contentRef.current.innerHTML !== content) {
         contentRef.current.innerHTML = content;
       }
+      // Track readOnly property changes
       contentRef.current.contentEditable = String(!readOnly);
     }
   }, [content]);
