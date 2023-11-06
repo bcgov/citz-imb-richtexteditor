@@ -11,7 +11,7 @@
     "bundle:dts": "node bundle-dts.js && rollup -c rollup.config.js && node remove-dts.js && rm build/utils/*.d.ts && rm build/assets/*.d.ts",
     "build:cp": "cp src/styles.css build/styles.css && cp src/assets/*.svg build/assets",
     "build": "rm -rf build && tsc && npm run bundle:dts && rm tsconfig.tsbuildinfo && npm run build:cp",
-    "pack": "npm i && npm run build && npm cache clean --force && npm pack && mkdir -p releases && mv *.tgz ./releases/"
+    "pack": "npm i && npm run build && npm cache clean --force && npm pack && mkdir releases && mv *.tgz ./releases/"
   },
   "dependencies": {
     "react": "18.2.0"

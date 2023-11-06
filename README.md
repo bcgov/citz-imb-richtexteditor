@@ -71,9 +71,10 @@ import { RichTextEditor } from '@bcgov/citz-imb-richtexteditor';
 
 const MyComponent = () => {
   const [content, setContent] = useState('');
+  const [readOnly, setReadOnly] = useState(false);
   return (
     <>
-      <RichTextEditor content={content} setContent={setContent} />
+      <RichTextEditor content={content} setContent={setContent} readOnly={readOnly} />
     </>
   );
 };
