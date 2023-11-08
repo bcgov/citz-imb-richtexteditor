@@ -11,8 +11,8 @@
   border-bottom: solid 1px #ccc;
   z-index: 10;
   position: relative;
-  top: 35px;
-  margin-top: -35px;
+  top: 40px;
+  margin-top: -40px;
 }
 
 .button {
@@ -33,7 +33,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  min-height: 100px;
+  min-height: 150px;
   width: 100%;
   white-space: pre-wrap;
   outline: none;
@@ -56,7 +56,7 @@
 }
 
 .button[disabled] {
-  background: #ececec;
+  background: #fafafa;
   color: #a0a0a0;
   border-color: #d0d0d0;
   cursor: not-allowed;
@@ -66,8 +66,8 @@
   border-color: rgb(40, 127, 226);
 }
 
-.icon img {
-  padding-bottom: 2px;
+.button img {
+  padding-bottom: 3px;
 }
 
 .icon {
