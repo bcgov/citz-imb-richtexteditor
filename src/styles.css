@@ -1,40 +1,43 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  width: 98%;
 }
 
 .toolbar {
-  margin-bottom: 10px;
+  gap: 10px;
+  padding: 5px;
+  margin: 1px;
+  width: 100%;
+  border-bottom: solid 1px #ccc;
+  z-index: 10;
+  position: relative;
+  top: 35px;
+  margin-top: -35px;
 }
 
 .button {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  padding: 5px 10px;
+  background-color: transparent;
+  border: none;
   margin-right: 5px;
   font-size: 16px;
   cursor: pointer;
+  font-family: 'Times New Roman';
 }
 
 .button:hover {
   background-color: #e0e0e0;
-}
-
-.button[disabled] {
-  background: #ececec;
-  color: #a0a0a0;
-  border-color: #d0d0d0;
-  cursor: not-allowed;
+  border-radius: 5px;
 }
 
 .content {
   border: 1px solid #ccc;
+  border-radius: 5px;
   padding: 10px;
   min-height: 100px;
-  width: 95%;
+  width: calc(100% - 10px);
   white-space: pre-wrap;
-  outline: none; /* Remove the default focus outline */
+  outline: none;
+  position: relative;
+  padding-top: 45px;
 }
 
 .content p {
@@ -46,13 +49,20 @@
   margin-bottom: 8px;
 }
 
-.content:focus {
-  border-color: #333; /* Darker border when focused */
-}
-
-.contentReadonly {
+.readonly {
   background-color: #f3f3f3;
   cursor: not-allowed;
+}
+
+.button[disabled] {
+  background: #ececec;
+  color: #a0a0a0;
+  border-color: #d0d0d0;
+  cursor: not-allowed;
+}
+
+.content:focus {
+  border-color: rgb(40, 127, 226);
 }
 
 .icon {
