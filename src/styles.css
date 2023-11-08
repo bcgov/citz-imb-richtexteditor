@@ -1,12 +1,13 @@
 .container {
-  width: 98%;
+  width: 100%;
+  padding: 0;
 }
 
 .toolbar {
   gap: 10px;
   padding: 5px;
   margin: 1px;
-  width: 100%;
+  width: calc(100% - 2px);
   border-bottom: solid 1px #ccc;
   z-index: 10;
   position: relative;
@@ -33,7 +34,7 @@
   border-radius: 5px;
   padding: 10px;
   min-height: 100px;
-  width: calc(100% - 10px);
+  width: 100%;
   white-space: pre-wrap;
   outline: none;
   position: relative;
@@ -65,7 +66,10 @@
   border-color: rgb(40, 127, 226);
 }
 
+.icon img {
+  padding-bottom: 2px;
+}
+
 .icon {
   width: 15px;
-  margin-bottom: -2px;
 }
