@@ -8,6 +8,7 @@ import {
   setCursorAfterElement,
   setCursorAtStartOfElement,
   removeTagFromSelection,
+  sanitizeContent,
 } from "./utils";
 
 export const RichTextEditor = (props: RichTextEditorProps) => {
@@ -39,7 +40,8 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         }
       });
 
-      setContent(contentRef.current.innerHTML);
+      const sanitizedContent = sanitizeContent(contentRef.current.innerHTML);
+      setContent(sanitizedContent);
     }
   };
 
