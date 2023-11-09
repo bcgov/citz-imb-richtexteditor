@@ -158,6 +158,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
     handleChange();
   };
 
+  // Function to toggle the list (ul) style
   const toggleListStyle = () => {
     const { selection, range } = getSelectionContext();
     if (!range) return;
@@ -194,11 +195,15 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
           parentP.parentNode?.replaceChild(ul, parentP);
           ul.appendChild(li);
         } else {
+          // If there is no parent paragraph, this is a new list item at the cursor position
           li.innerHTML = "<br>"; // Add a break line if it's an empty list item
-          contentRef.current?.appendChild(ul);
+          range.insertNode(ul);
           ul.appendChild(li);
         }
       }
+
+      // Set the cursor to the first list item
+      setCursorAtStartOfElement(ul.firstChild as HTMLElement);
     }
 
     // Update content
@@ -210,47 +215,57 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
 
   // Handle when a key is pressed.
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const { currentNode, range } = getSelectionContext();
+    const { currentNode } = getSelectionContext();
     const parentElement = getParentElement({ contentRef });
+    const parentLi = getParentElement({ contentRef, tag: "LI" });
 
     if (e.key === "Enter") {
-      if (parentElement && parentElement.nodeName === "LI") {
-        e.preventDefault();
-        const textContent = currentNode?.textContent || "";
+      // Prevent the default behavior of the Enter key
+      e.preventDefault();
 
-        if (textContent.trim() === "") {
-          // Exit the list if the current bullet point is empty
-          const ul = parentElement.parentNode;
+      if (parentLi) {
+        // If the current list item is empty, exit the list
+        if (currentNode?.textContent?.trim() === "") {
+          const ul = parentLi.parentNode;
           const newP = document.createElement("p");
           newP.appendChild(document.createElement("br"));
           ul?.parentNode?.insertBefore(newP, ul.nextSibling);
-          ul?.removeChild(parentElement);
+          ul?.removeChild(parentLi);
+
+          if (!ul?.hasChildNodes()) {
+            // Remove the list if there are no items left
+            ul?.parentNode?.removeChild(ul);
+          }
+
           setCursorAtStartOfElement(newP);
         } else {
-          // Create a new bullet point
+          // If the current list item is not empty, create a new list item
           const newLi = document.createElement("li");
           newLi.appendChild(document.createElement("br"));
-          parentElement.after(newLi);
+          parentLi.after(newLi);
           setCursorAtStartOfElement(newLi);
         }
       } else {
-        // Insert paragraph for non-list items
-        e.preventDefault();
-        const p = document.createElement("p");
+        // For non-list items, insert a new paragraph
+        const newP = document.createElement("p");
         const br = document.createElement("br");
-        p.appendChild(br);
+        newP.appendChild(br);
 
-        if (parentElement && parentElement.parentElement) {
-          parentElement.parentElement.appendChild(p);
-        } else if (range) {
-          range.insertNode(p);
+        if (parentElement && parentElement.nextSibling) {
+          // Insert the new paragraph after the parent element
+          parentElement.parentNode?.insertBefore(
+            newP,
+            parentElement.nextSibling
+          );
+        } else {
+          // If there is no parent element, append the new paragraph to the content editable div
+          contentRef.current?.appendChild(newP);
         }
-
-        setCursorAtStartOfElement(p);
+        setCursorAtStartOfElement(newP);
       }
-    }
 
-    handleChange();
+      handleChange();
+    }
   };
 
   // Update content in the contentEditable when state changes
