@@ -109,43 +109,56 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
 
   // Function to toggle the header (h3) style
   const toggleHeaderStyle = () => {
-    const { selection, range } = getSelectionContext();
-
-    // Check if we have a selection
+    const { currentNode, range } = getSelectionContext();
     const selectedText = range?.toString() ?? "";
-    if (selectedText.trim() === "") {
-      // No selection:
-      // Insert a blank h3 element and place the cursor inside
-      const h3 = document.createElement("h3");
-      const textNode = document.createTextNode("\u200B"); // Zero-width space
-      h3.appendChild(textNode);
+    const currentElement =
+      currentNode instanceof HTMLElement
+        ? currentNode
+        : currentNode?.parentElement;
 
-      if (contentRef.current && range) {
+    // Check if the current line is effectively empty or contains only a <br> or wrapped in <p>
+    const isEmptyOrBr =
+      !currentElement ||
+      currentElement.innerHTML === "<br>" ||
+      currentElement.outerHTML === "<p><br></p>";
+
+    if (selectedText.trim() === "" && isEmptyOrBr) {
+      // Clear the line and replace with an h3 containing a zero-width space
+      const h3 = document.createElement("h3");
+      h3.innerHTML = "\u200B"; // Zero-width space
+
+      if (currentElement) {
+        // If the current element is a P that contains only a BR, replace it entirely with the H3
+        if (currentElement.tagName === "P") {
+          currentElement.replaceWith(h3);
+        } else {
+          // For other cases, just clear the innerHTML and set it to the H3
+          currentElement.innerHTML = "";
+          currentElement.appendChild(h3);
+        }
+      } else if (contentRef.current) {
+        // If there's no current element, append the H3 to the contentRef
         contentRef.current.appendChild(h3);
-        range.setStart(textNode, 0);
-        range.collapse(true);
-        selection?.removeAllRanges();
-        selection?.addRange(range);
       }
+
+      // Set the cursor inside the new h3 element
+      setCursorAtStartOfElement(h3);
+    } else if (selectedText.trim() === "") {
+      // No selection and current line is not empty: insert a blank h3 at the end
+      const h3 = document.createElement("h3");
+      h3.innerHTML = "\u200B"; // Zero-width space
+      contentRef.current?.appendChild(h3);
+      setCursorAtStartOfElement(h3);
     } else {
-      // There is a selection: Toggle the h3 tag on the selection
-      const parentElement = getParentElement({ contentRef, tag: "H3" });
-      if (parentElement) {
-        // If selection is already wrapped in h3, unwrap it
-        parentElement.replaceWith(...Array.from(parentElement.childNodes));
-      } else if (range) {
-        // Wrap selection in h3
-        const h3 = document.createElement("h3");
-        const selectedContent = range.extractContents();
-        h3.appendChild(selectedContent);
-        range?.insertNode(h3);
-      }
+      // There is selected text: toggle the h3 tag on the selection
+      toggleStyle("H3");
     }
 
     // Update content
     handleChange();
   };
 
+  // Function to toggle the list (ul) style
   const toggleListStyle = () => {
     const { selection, range } = getSelectionContext();
     if (!range) return;
@@ -182,11 +195,15 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
           parentP.parentNode?.replaceChild(ul, parentP);
           ul.appendChild(li);
         } else {
+          // If there is no parent paragraph, this is a new list item at the cursor position
           li.innerHTML = "<br>"; // Add a break line if it's an empty list item
-          contentRef.current?.appendChild(ul);
+          range.insertNode(ul);
           ul.appendChild(li);
         }
       }
+
+      // Set the cursor to the first list item
+      setCursorAtStartOfElement(ul.firstChild as HTMLElement);
     }
 
     // Update content
@@ -198,47 +215,57 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
 
   // Handle when a key is pressed.
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const { currentNode, range } = getSelectionContext();
+    const { currentNode } = getSelectionContext();
     const parentElement = getParentElement({ contentRef });
+    const parentLi = getParentElement({ contentRef, tag: "LI" });
 
     if (e.key === "Enter") {
-      if (parentElement && parentElement.nodeName === "LI") {
-        e.preventDefault();
-        const textContent = currentNode?.textContent || "";
+      // Prevent the default behavior of the Enter key
+      e.preventDefault();
 
-        if (textContent.trim() === "") {
-          // Exit the list if the current bullet point is empty
-          const ul = parentElement.parentNode;
+      if (parentLi) {
+        // If the current list item is empty, exit the list
+        if (currentNode?.textContent?.trim() === "") {
+          const ul = parentLi.parentNode;
           const newP = document.createElement("p");
           newP.appendChild(document.createElement("br"));
           ul?.parentNode?.insertBefore(newP, ul.nextSibling);
-          ul?.removeChild(parentElement);
+          ul?.removeChild(parentLi);
+
+          if (!ul?.hasChildNodes()) {
+            // Remove the list if there are no items left
+            ul?.parentNode?.removeChild(ul);
+          }
+
           setCursorAtStartOfElement(newP);
         } else {
-          // Create a new bullet point
+          // If the current list item is not empty, create a new list item
           const newLi = document.createElement("li");
           newLi.appendChild(document.createElement("br"));
-          parentElement.after(newLi);
+          parentLi.after(newLi);
           setCursorAtStartOfElement(newLi);
         }
       } else {
-        // Insert paragraph for non-list items
-        e.preventDefault();
-        const p = document.createElement("p");
+        // For non-list items, insert a new paragraph
+        const newP = document.createElement("p");
         const br = document.createElement("br");
-        p.appendChild(br);
+        newP.appendChild(br);
 
-        if (parentElement && parentElement.parentElement) {
-          parentElement.parentElement.appendChild(p);
-        } else if (range) {
-          range.insertNode(p);
+        if (parentElement && parentElement.nextSibling) {
+          // Insert the new paragraph after the parent element
+          parentElement.parentNode?.insertBefore(
+            newP,
+            parentElement.nextSibling
+          );
+        } else {
+          // If there is no parent element, append the new paragraph to the content editable div
+          contentRef.current?.appendChild(newP);
         }
-
-        setCursorAtStartOfElement(p);
+        setCursorAtStartOfElement(newP);
       }
-    }
 
-    handleChange();
+      handleChange();
+    }
   };
 
   // Update content in the contentEditable when state changes
@@ -250,7 +277,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
       // Track readOnly property changes
       contentRef.current.contentEditable = String(!readOnly);
     }
-  }, [content]);
+  }, [content, readOnly]);
 
   return (
     <div className="container">
