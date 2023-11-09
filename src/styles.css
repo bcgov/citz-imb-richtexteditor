@@ -13,6 +13,7 @@
   position: relative;
   top: 40px;
   margin-top: -40px;
+  background-color: #fff;
 }
 
 .button {
@@ -34,11 +35,28 @@
   border-radius: 5px;
   padding: 10px;
   min-height: 150px;
-  width: 100%;
+  max-height: 1000px;
+  width: calc(100% - 10px);
   white-space: pre-wrap;
   outline: none;
   position: relative;
   padding-top: 45px;
+  resize: vertical;
+  overflow: auto;
+  background-color: #fff;
+}
+
+/* Pseudo-element to cover the top part of .content */
+.content::before {
+  content: '';
+  position: fixed;
+  top: 6px;
+  border-radius: 5px;
+  left: 9px;
+  width: calc(100% - 20px);
+  height: 35px; /* Height of the area to hide */
+  background-color: #fff; /* Match the background color of the editor */
+  z-index: 2; /* Ensure it's above the content */
 }
 
 .content p {
