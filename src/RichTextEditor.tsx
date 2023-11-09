@@ -250,7 +250,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
       // Track readOnly property changes
       contentRef.current.contentEditable = String(!readOnly);
     }
-  }, [content]);
+  }, [content, readOnly]);
 
   return (
     <div className="container">
