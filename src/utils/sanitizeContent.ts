@@ -9,9 +9,9 @@ export const sanitizeContent = (htmlContent: string): string => {
   htmlContent = htmlContent.replace(/ style=".*?"/gi, "");
   htmlContent = htmlContent.replace(/ style='.*?'/gi, "");
 
-  // Remove <script>, <iframe>, <form>, <object>, <embed>, <applet>, and event handlers
+  // Remove <script>, <style>, <iframe>, <form>, <object>, <embed>, <applet>, and event handlers
   const forbiddenTags =
-    /<script.*?>.*?<\/script>|<iframe.*?>.*?<\/iframe>|<form.*?>.*?<\/form>|<object.*?>.*?<\/object>|<embed.*?>.*?<\/embed>|<applet.*?>.*?<\/applet>/gi;
+    /<script.*?>.*?<\/script>|<iframe.*?>.*?<\/iframe>|<form.*?>.*?<\/form>|<object.*?>.*?<\/object>|<embed.*?>.*?<\/embed>|<applet.*?>.*?<\/applet>|<style.*?>.*?<\/style>/gi;
   htmlContent = htmlContent.replace(forbiddenTags, "");
 
   // Remove event handlers, javascript: URLs, data URLs, and XML/namespace attributes
