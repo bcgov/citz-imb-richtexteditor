@@ -109,37 +109,49 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
 
   // Function to toggle the header (h3) style
   const toggleHeaderStyle = () => {
-    const { selection, range } = getSelectionContext();
-
-    // Check if we have a selection
+    const { currentNode, range } = getSelectionContext();
     const selectedText = range?.toString() ?? "";
-    if (selectedText.trim() === "") {
-      // No selection:
-      // Insert a blank h3 element and place the cursor inside
-      const h3 = document.createElement("h3");
-      const textNode = document.createTextNode("\u200B"); // Zero-width space
-      h3.appendChild(textNode);
+    const currentElement =
+      currentNode instanceof HTMLElement
+        ? currentNode
+        : currentNode?.parentElement;
 
-      if (contentRef.current && range) {
+    // Check if the current line is effectively empty or contains only a <br> or wrapped in <p>
+    const isEmptyOrBr =
+      !currentElement ||
+      currentElement.innerHTML === "<br>" ||
+      currentElement.outerHTML === "<p><br></p>";
+
+    if (selectedText.trim() === "" && isEmptyOrBr) {
+      // Clear the line and replace with an h3 containing a zero-width space
+      const h3 = document.createElement("h3");
+      h3.innerHTML = "\u200B"; // Zero-width space
+
+      if (currentElement) {
+        // If the current element is a P that contains only a BR, replace it entirely with the H3
+        if (currentElement.tagName === "P") {
+          currentElement.replaceWith(h3);
+        } else {
+          // For other cases, just clear the innerHTML and set it to the H3
+          currentElement.innerHTML = "";
+          currentElement.appendChild(h3);
+        }
+      } else if (contentRef.current) {
+        // If there's no current element, append the H3 to the contentRef
         contentRef.current.appendChild(h3);
-        range.setStart(textNode, 0);
-        range.collapse(true);
-        selection?.removeAllRanges();
-        selection?.addRange(range);
       }
+
+      // Set the cursor inside the new h3 element
+      setCursorAtStartOfElement(h3);
+    } else if (selectedText.trim() === "") {
+      // No selection and current line is not empty: insert a blank h3 at the end
+      const h3 = document.createElement("h3");
+      h3.innerHTML = "\u200B"; // Zero-width space
+      contentRef.current?.appendChild(h3);
+      setCursorAtStartOfElement(h3);
     } else {
-      // There is a selection: Toggle the h3 tag on the selection
-      const parentElement = getParentElement({ contentRef, tag: "H3" });
-      if (parentElement) {
-        // If selection is already wrapped in h3, unwrap it
-        parentElement.replaceWith(...Array.from(parentElement.childNodes));
-      } else if (range) {
-        // Wrap selection in h3
-        const h3 = document.createElement("h3");
-        const selectedContent = range.extractContents();
-        h3.appendChild(selectedContent);
-        range?.insertNode(h3);
-      }
+      // There is selected text: toggle the h3 tag on the selection
+      toggleStyle("H3");
     }
 
     // Update content
