@@ -7,7 +7,7 @@
   gap: 10px;
   padding: 5px;
   margin: 1px;
-  width: calc(100% - 2px);
+  width: calc(100% - 12px);
   border-bottom: solid 1px #ccc;
   z-index: 10;
   position: relative;
