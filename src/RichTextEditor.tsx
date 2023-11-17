@@ -304,56 +304,56 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
   }, [content, readOnly]);
 
   return (
-    <div className="container">
-      <div className="toolbar">
+    <div className="rt-container">
+      <div className="rt-toolbar">
         <button
-          className="button"
+          className="rt-button"
           disabled={readOnly}
           onClick={() => toggleStyle("B")}
         >
           <b>B</b>
         </button>
         <button
-          className="button"
+          className="rt-button"
           disabled={readOnly}
           onClick={() => toggleStyle("I")}
         >
           <i>I</i>
         </button>
         <button
-          className="button"
+          className="rt-button"
           disabled={readOnly}
           onClick={() => toggleStyle("S")}
         >
           <s>S</s>
         </button>
         <button
-          className="button"
+          className="rt-button"
           disabled={readOnly}
           onClick={() => toggleHeaderStyle()}
         >
           <b>H</b>
         </button>
         <button
-          className="button"
+          className="rt-button"
           disabled={readOnly}
           onClick={() => toggleListStyle()}
         >
           <img
             src={!readOnly ? ListIcon : ListIconDisabled}
             alt="List Icon"
-            className="icon"
+            className="rt-icon"
           />
         </button>
         <button
-          className="button"
+          className="rt-button"
           disabled={readOnly}
-          onClick={() => toggleStyle("P", "yellowHighlight")}
+          onClick={() => toggleStyle("P", "rt-yellowHighlight")}
         >
           <img
             src={!readOnly ? HighlighterIcon : HighlighterIconDisabled}
             alt="Highlighter Icon"
-            className="icon"
+            className="rt-icon"
           />
         </button>
       </div>
@@ -362,7 +362,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         contentEditable={true}
         onInput={handleChange}
         onKeyDown={handleKeyDown}
-        className={`content ${readOnly ? "contentReadonly" : ""}`}
+        className="rt-content"
       />
     </div>
   );
