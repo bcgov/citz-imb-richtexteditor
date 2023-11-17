@@ -1,11 +1,18 @@
+*, ::after, ::before {
+  box-sizing: content-box;
+}
+
+div {
+  display: inline-block;
+}
+
 .container {
   width: 100%;
   padding: 0;
-  margin-top: 5px;
+  margin-top: -35px;
 }
 
 .toolbar {
-  gap: 10px;
   padding: 5px;
   margin: 1px;
   width: calc(100% - 2px);
@@ -28,6 +35,7 @@
   font-size: 16px;
   cursor: pointer;
   font-family: 'Times New Roman';
+  line-height: normal;
 }
 
 .button:hover {
@@ -90,7 +98,8 @@
 }
 
 .icon {
-  margin-bottom: -2px;
+  vertical-align: middle;
+  padding-bottom: 2px;
   width: 15px;
   height: 15px;
 }
