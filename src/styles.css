@@ -1,18 +1,14 @@
-*, ::after, ::before {
+.rt-container, .rt-toolbar, .rt-content, .rt-button, ::after, ::before {
   box-sizing: content-box;
 }
 
-div {
-  display: inline-block;
-}
-
-.container {
+.rt-container {
   width: 100%;
   padding: 0;
   margin-top: -35px;
 }
 
-.toolbar {
+.rt-toolbar {
   padding: 5px;
   margin: 1px;
   width: calc(100% - 2px);
@@ -25,7 +21,7 @@ div {
   background-color: #fff;
 }
 
-.button {
+.rt-button {
   height: 20px;
   width: 20px;
   padding: 2px;
@@ -38,12 +34,12 @@ div {
   line-height: normal;
 }
 
-.button:hover {
+.rt-button:hover {
   background-color: #e0e0e0;
   border-radius: 5px;
 }
 
-.content {
+.rt-content {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
@@ -60,7 +56,7 @@ div {
 }
 
 /* Pseudo-element to cover the top part of .content */
-.content::before {
+.rt-content::before {
   content: '';
   position: fixed;
   top: 6px;
@@ -72,43 +68,38 @@ div {
   z-index: 2; /* Ensure it's above the content */
 }
 
-.content p {
+.rt-content p {
   margin: 0;
 }
 
-.content h3 {
+.rt-content h3 {
   margin-top: 0;
   margin-bottom: 8px;
 }
 
-.readonly {
-  background-color: #f3f3f3;
-  cursor: not-allowed;
-}
-
-.button[disabled] {
+.rt-button[disabled] {
   background: #fafafa;
   color: #a0a0a0;
   border-color: #d0d0d0;
   cursor: not-allowed;
 }
 
-.content:focus {
+.rt-content:focus {
   border-color: rgb(40, 127, 226);
 }
 
-.icon {
+.rt-icon {
   vertical-align: middle;
   padding-bottom: 2px;
   width: 15px;
   height: 15px;
 }
 
-.button:has(.icon) {
+.rt-button:has(.icon) {
   margin-left: 4px;
 }
 
-.yellowHighlight {
+.rt-yellowHighlight {
   display: inline;
   background-color: yellow;
 }
