@@ -1,5 +1,10 @@
 import "./styles.css";
-import { ListIcon, ListIconDisabled } from "./assets";
+import {
+  HighlighterIcon,
+  HighlighterIconDisabled,
+  ListIcon,
+  ListIconDisabled,
+} from "./assets";
 import React, { useRef, useEffect } from "react";
 import { HTMLTag, RichTextEditorProps } from "./types";
 import {
@@ -9,6 +14,7 @@ import {
   setCursorAtStartOfElement,
   removeTagFromSelection,
   sanitizeContent,
+  setCursorAtStart,
 } from "./utils";
 
 export const RichTextEditor = (props: RichTextEditorProps) => {
@@ -40,14 +46,21 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         }
       });
 
+      // Handle edge case for cursor positioning.
+      if (content === "<br>") setCursorAtStart(contentRef);
+
       const sanitizedContent = sanitizeContent(contentRef.current.innerHTML);
       setContent(sanitizedContent);
     }
   };
 
-  const toggleStyle = (tag: HTMLTag) => {
+  const toggleStyle = (tag: HTMLTag, className?: string) => {
     const { selection, range } = getSelectionContext();
-    const styledParentElement = getParentElement({ contentRef, tag });
+    const styledParentElement = getParentElement({
+      contentRef,
+      tag,
+      className,
+    });
     const selectedText = range?.toString() ?? "";
 
     if (selectedText.trim() === "") {
@@ -60,6 +73,11 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         const element = document.createElement(tag);
         const textNode = document.createTextNode("\u200B"); // Zero-width space
         element.appendChild(textNode);
+
+        // Add class names if provided
+        if (className) {
+          element.className = className;
+        }
 
         if (range) {
           range.insertNode(element);
@@ -84,9 +102,15 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         // If the selected text is not styled, style it
 
         // Remove any instances of the tag from within the selection
-        removeTagFromSelection(tag);
+        removeTagFromSelection(tag, className);
 
         const element = document.createElement(tag);
+
+        // Add class names if provided
+        if (className) {
+          element.className = className;
+        }
+
         if (range) {
           element.appendChild(range?.extractContents());
           range?.insertNode(element);
@@ -318,6 +342,17 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
           <img
             src={!readOnly ? ListIcon : ListIconDisabled}
             alt="List Icon"
+            className="icon"
+          />
+        </button>
+        <button
+          className="button"
+          disabled={readOnly}
+          onClick={() => toggleStyle("P", "yellowHighlight")}
+        >
+          <img
+            src={!readOnly ? HighlighterIcon : HighlighterIconDisabled}
+            alt="Highlighter Icon"
             className="icon"
           />
         </button>

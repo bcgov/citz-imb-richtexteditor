@@ -4,7 +4,7 @@ import { GetParentElementProps } from "../types";
 export const getParentElement = (
   props: GetParentElementProps
 ): HTMLElement | null => {
-  const { contentRef, tag } = props;
+  const { contentRef, tag, className } = props;
 
   // Get the current selection from the window
   const selection: Selection | null = window.getSelection();
@@ -18,8 +18,12 @@ export const getParentElement = (
   while (node && node !== contentRef.current) {
     // If the current node is an element node, return it
     if (node.nodeType === Node.ELEMENT_NODE && node instanceof HTMLElement) {
-      // Must match tag if param is specified
-      if ((tag && node.nodeName === tag) || !tag) return node;
+      // Check if the node matches the tag and, if className is defined, the class
+      const tagMatches =
+        !tag || node.nodeName.toLowerCase() === tag.toLowerCase();
+      const classMatches = !className || node.classList.contains(className);
+
+      if (tagMatches && classMatches) return node;
     }
     // Move up to the parent node
     node = node.parentNode;

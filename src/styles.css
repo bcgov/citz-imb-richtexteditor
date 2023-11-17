@@ -1,13 +1,22 @@
+*, ::after, ::before {
+  box-sizing: content-box;
+}
+
+div {
+  display: inline-block;
+}
+
 .container {
   width: 100%;
   padding: 0;
+  margin-top: -35px;
 }
 
 .toolbar {
-  gap: 10px;
   padding: 5px;
   margin: 1px;
-  width: calc(100% - 12px);
+  width: calc(100% - 2px);
+  height: 25px;
   border-bottom: solid 1px #ccc;
   z-index: 10;
   position: relative;
@@ -17,12 +26,16 @@
 }
 
 .button {
+  height: 20px;
+  width: 20px;
+  padding: 2px;
   background-color: transparent;
   border: none;
   margin-right: 5px;
   font-size: 16px;
   cursor: pointer;
   font-family: 'Times New Roman';
+  line-height: normal;
 }
 
 .button:hover {
@@ -54,7 +67,7 @@
   border-radius: 5px;
   left: 9px;
   width: calc(100% - 20px);
-  height: 35px; /* Height of the area to hide */
+  height: 40px; /* Height of the area to hide */
   background-color: #fff; /* Match the background color of the editor */
   z-index: 2; /* Ensure it's above the content */
 }
@@ -84,10 +97,18 @@
   border-color: rgb(40, 127, 226);
 }
 
-.button img {
-  padding-bottom: 3px;
+.icon {
+  vertical-align: middle;
+  padding-bottom: 2px;
+  width: 15px;
+  height: 15px;
 }
 
-.icon {
-  width: 15px;
+.button:has(.icon) {
+  margin-left: 4px;
+}
+
+.yellowHighlight {
+  display: inline;
+  background-color: yellow;
 }
