@@ -56,7 +56,11 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
 
   const toggleStyle = (tag: HTMLTag, className?: string) => {
     const { selection, range } = getSelectionContext();
-    const styledParentElement = getParentElement({ contentRef, tag });
+    const styledParentElement = getParentElement({
+      contentRef,
+      tag,
+      className,
+    });
     const selectedText = range?.toString() ?? "";
 
     if (selectedText.trim() === "") {
@@ -98,7 +102,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         // If the selected text is not styled, style it
 
         // Remove any instances of the tag from within the selection
-        removeTagFromSelection(tag);
+        removeTagFromSelection(tag, className);
 
         const element = document.createElement(tag);
 

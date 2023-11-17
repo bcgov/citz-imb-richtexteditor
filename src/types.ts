@@ -17,4 +17,5 @@ export type SelectionContext = {
 export type GetParentElementProps = {
   contentRef: MutableRefObject<HTMLDivElement>;
   tag?: HTMLTag;
+  className?: string;
 };
