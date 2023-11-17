@@ -1,5 +1,10 @@
 import "./styles.css";
-import { ListIcon, ListIconDisabled } from "./assets";
+import {
+  HighlighterIcon,
+  HighlighterIconDisabled,
+  ListIcon,
+  ListIconDisabled,
+} from "./assets";
 import React, { useRef, useEffect } from "react";
 import { HTMLTag, RichTextEditorProps } from "./types";
 import {
@@ -318,6 +323,13 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
           <img
             src={!readOnly ? ListIcon : ListIconDisabled}
             alt="List Icon"
+            className="icon"
+          />
+        </button>
+        <button className="button" disabled={readOnly}>
+          <img
+            src={!readOnly ? HighlighterIcon : HighlighterIconDisabled}
+            alt="Highlighter Icon"
             className="icon"
           />
         </button>
