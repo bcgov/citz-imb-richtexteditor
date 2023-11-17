@@ -9,7 +9,6 @@ function App() {
   return (
     <div className="main">
       <h1>RichTextEditor</h1>
-      <br />
       <RichTextEditor
         content={content}
         setContent={setContent}
