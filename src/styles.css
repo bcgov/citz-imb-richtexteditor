@@ -98,3 +98,8 @@
 .button:has(.icon) {
   margin-left: 4px;
 }
+
+.yellowHighlight {
+  display: inline;
+  background-color: yellow;
+}

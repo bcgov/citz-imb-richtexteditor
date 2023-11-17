@@ -14,6 +14,7 @@ import {
   setCursorAtStartOfElement,
   removeTagFromSelection,
   sanitizeContent,
+  setCursorAtStart,
 } from "./utils";
 
 export const RichTextEditor = (props: RichTextEditorProps) => {
@@ -45,12 +46,15 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         }
       });
 
+      // Handle edge case for cursor positioning.
+      if (content === "<br>") setCursorAtStart(contentRef);
+
       const sanitizedContent = sanitizeContent(contentRef.current.innerHTML);
       setContent(sanitizedContent);
     }
   };
 
-  const toggleStyle = (tag: HTMLTag) => {
+  const toggleStyle = (tag: HTMLTag, className?: string) => {
     const { selection, range } = getSelectionContext();
     const styledParentElement = getParentElement({ contentRef, tag });
     const selectedText = range?.toString() ?? "";
@@ -65,6 +69,11 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         const element = document.createElement(tag);
         const textNode = document.createTextNode("\u200B"); // Zero-width space
         element.appendChild(textNode);
+
+        // Add class names if provided
+        if (className) {
+          element.className = className;
+        }
 
         if (range) {
           range.insertNode(element);
@@ -92,6 +101,12 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         removeTagFromSelection(tag);
 
         const element = document.createElement(tag);
+
+        // Add class names if provided
+        if (className) {
+          element.className = className;
+        }
+
         if (range) {
           element.appendChild(range?.extractContents());
           range?.insertNode(element);
@@ -326,7 +341,11 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
             className="icon"
           />
         </button>
-        <button className="button" disabled={readOnly}>
+        <button
+          className="button"
+          disabled={readOnly}
+          onClick={() => toggleStyle("P", "yellowHighlight")}
+        >
           <img
             src={!readOnly ? HighlighterIcon : HighlighterIconDisabled}
             alt="Highlighter Icon"
