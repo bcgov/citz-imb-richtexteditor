@@ -4,6 +4,8 @@ import {
   HighlighterIconDisabled,
   ListIcon,
   ListIconDisabled,
+  NumberedListIcon,
+  NumberedListIconDisabled,
 } from "./assets";
 import React, { useRef, useEffect } from "react";
 import { HTMLTag, RichTextEditorProps } from "./types";
@@ -342,6 +344,17 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
           <img
             src={!readOnly ? ListIcon : ListIconDisabled}
             alt="List Icon"
+            className="rt-icon"
+          />
+        </button>
+        <button
+          className="rt-button"
+          disabled={readOnly}
+          onClick={() => toggleListStyle()}
+        >
+          <img
+            src={!readOnly ? NumberedListIcon : NumberedListIconDisabled}
+            alt="Numbered List Icon"
             className="rt-icon"
           />
         </button>
