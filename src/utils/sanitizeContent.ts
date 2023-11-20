@@ -1,6 +1,6 @@
 export const sanitizeContent = (htmlContent: string): string => {
   // Define an allowlist of allowed tags
-  const allowlist = ["p", "br", "h", "ul", "li", "b", "i", "s", "u"];
+  const allowlist = ["p", "br", "h", "ul", "ol", "li", "b", "i", "s", "u"];
 
   // Remove DOCTYPE, XML declarations, <link> tags, and inline styles
   htmlContent = htmlContent.replace(/<!DOCTYPE.*?>/gi, "");

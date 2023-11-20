@@ -4,6 +4,8 @@ import {
   HighlighterIconDisabled,
   ListIcon,
   ListIconDisabled,
+  NumberedListIcon,
+  NumberedListIconDisabled,
 } from "./assets";
 import React, { useRef, useEffect } from "react";
 import { HTMLTag, RichTextEditorProps } from "./types";
@@ -182,52 +184,52 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
     handleChange();
   };
 
-  // Function to toggle the list (ul) style
-  const toggleListStyle = () => {
+  // Function to toggle the list style
+  const toggleListStyle = (listType: "OL" | "UL") => {
     const { selection, range } = getSelectionContext();
     if (!range) return;
 
     const parentElement = getParentElement({ contentRef });
     if (parentElement?.nodeName === "LI") {
       // If already in a list, unwrap the list
-      const ul = parentElement.parentNode;
-      if (ul && ul.nodeName === "UL") {
-        while (ul.firstChild) {
-          const li = ul.firstChild;
+      const list = parentElement.parentNode;
+      if (list && list.nodeName === listType) {
+        while (list.firstChild) {
+          const li = list.firstChild;
           const p = document.createElement("p");
           p.innerHTML = (li as HTMLElement).innerHTML;
-          ul.parentNode?.insertBefore(p, ul);
-          ul.removeChild(li);
+          list.parentNode?.insertBefore(p, list);
+          list.removeChild(li);
         }
-        ul.parentNode?.removeChild(ul);
+        list.parentNode?.removeChild(list);
       }
     } else {
       // If not in a list, wrap the current paragraph or selection in a list item within an unordered list
-      const ul = document.createElement("ul");
+      const list = document.createElement(listType);
       const li = document.createElement("li");
 
       if (selection?.toString()) {
         // If there is selected text, wrap it in a list item
         li.appendChild(range.extractContents());
-        ul.appendChild(li);
-        range.insertNode(ul);
+        list.appendChild(li);
+        range.insertNode(list);
       } else {
         // If there's no selection, find the parent paragraph and replace it with a list item
         const parentP = getParentElement({ contentRef, tag: "P" });
         if (parentP) {
           li.innerHTML = parentP.innerHTML || "";
-          parentP.parentNode?.replaceChild(ul, parentP);
-          ul.appendChild(li);
+          parentP.parentNode?.replaceChild(list, parentP);
+          list.appendChild(li);
         } else {
           // If there is no parent paragraph, this is a new list item at the cursor position
           li.innerHTML = "<br>"; // Add a break line if it's an empty list item
-          range.insertNode(ul);
-          ul.appendChild(li);
+          range.insertNode(list);
+          list.appendChild(li);
         }
       }
 
       // Set the cursor to the first list item
-      setCursorAtStartOfElement(ul.firstChild as HTMLElement);
+      setCursorAtStartOfElement(list.firstChild as HTMLElement);
     }
 
     // Update content
@@ -337,11 +339,22 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         <button
           className="rt-button"
           disabled={readOnly}
-          onClick={() => toggleListStyle()}
+          onClick={() => toggleListStyle("UL")}
         >
           <img
             src={!readOnly ? ListIcon : ListIconDisabled}
             alt="List Icon"
+            className="rt-icon"
+          />
+        </button>
+        <button
+          className="rt-button"
+          disabled={readOnly}
+          onClick={() => toggleListStyle("OL")}
+        >
+          <img
+            src={!readOnly ? NumberedListIcon : NumberedListIconDisabled}
+            alt="Numbered List Icon"
             className="rt-icon"
           />
         </button>
