@@ -1,5 +1,7 @@
 import "./styles.css";
 import {
+  FontSizeIcon,
+  FontSizeIconDisabled,
   HighlighterIcon,
   HighlighterIconDisabled,
   ListIcon,
@@ -7,7 +9,7 @@ import {
   NumberedListIcon,
   NumberedListIconDisabled,
 } from "./assets";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { HTMLTag, RichTextEditorProps } from "./types";
 import {
   getParentElement,
@@ -54,6 +56,15 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
       const sanitizedContent = sanitizeContent(contentRef.current.innerHTML);
       setContent(sanitizedContent);
     }
+  };
+
+  // State to manage popover visibility
+  const [showHeaderPopover, setShowHeaderPopover] = useState(false);
+
+  // Function to handle header style change and close popover
+  const handleHeaderStyleChange = (size) => {
+    toggleHeaderStyle(size);
+    setShowHeaderPopover(false); // Hide popover
   };
 
   const toggleStyle = (tag: HTMLTag, className?: string) => {
@@ -117,6 +128,17 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
           element.appendChild(range?.extractContents());
           range?.insertNode(element);
         }
+
+        // Remove any parent header sizes
+        if (
+          tag.startsWith("H") &&
+          ["H1", "H2", "H3"].includes(
+            getParentElement({ contentRef })?.nodeName
+          )
+        ) {
+          getParentElement({ contentRef }).replaceWith(element);
+          range.setEndAfter(element);
+        }
       }
 
       // Update content
@@ -129,12 +151,13 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         selection?.addRange(range);
       }
     }
+
     // Maintain focus.
     contentRef.current?.focus();
   };
 
-  // Function to toggle the header (h3) style
-  const toggleHeaderStyle = () => {
+  // Function to toggle the header style
+  const toggleHeaderStyle = (size: "H1" | "H2" | "H3") => {
     const { currentNode, range } = getSelectionContext();
     const selectedText = range?.toString() ?? "";
     const currentElement =
@@ -149,35 +172,35 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
       currentElement.outerHTML === "<p><br></p>";
 
     if (selectedText.trim() === "" && isEmptyOrBr) {
-      // Clear the line and replace with an h3 containing a zero-width space
-      const h3 = document.createElement("h3");
-      h3.innerHTML = "\u200B"; // Zero-width space
+      // Clear the line and replace with a header containing a zero-width space
+      const header = document.createElement(size);
+      header.innerHTML = "\u200B"; // Zero-width space
 
       if (currentElement) {
-        // If the current element is a P that contains only a BR, replace it entirely with the H3
+        // If the current element is a P that contains only a BR, replace it entirely with the header
         if (currentElement.tagName === "P") {
-          currentElement.replaceWith(h3);
+          currentElement.replaceWith(header);
         } else {
-          // For other cases, just clear the innerHTML and set it to the H3
+          // For other cases, just clear the innerHTML and set it to the header
           currentElement.innerHTML = "";
-          currentElement.appendChild(h3);
+          currentElement.appendChild(header);
         }
       } else if (contentRef.current) {
-        // If there's no current element, append the H3 to the contentRef
-        contentRef.current.appendChild(h3);
+        // If there's no current element, append the header to the contentRef
+        contentRef.current.appendChild(header);
       }
 
-      // Set the cursor inside the new h3 element
-      setCursorAtStartOfElement(h3);
+      // Set the cursor inside the new header element
+      setCursorAtStartOfElement(header);
     } else if (selectedText.trim() === "") {
-      // No selection and current line is not empty: insert a blank h3 at the end
-      const h3 = document.createElement("h3");
-      h3.innerHTML = "\u200B"; // Zero-width space
-      contentRef.current?.appendChild(h3);
-      setCursorAtStartOfElement(h3);
+      // No selection and current line is not empty: insert a blank header at the end
+      const header = document.createElement(size);
+      header.innerHTML = "\u200B"; // Zero-width space
+      contentRef.current?.appendChild(header);
+      setCursorAtStartOfElement(header);
     } else {
-      // There is selected text: toggle the h3 tag on the selection
-      toggleStyle("H3");
+      // There is selected text: toggle the header tag on the selection
+      toggleStyle(size);
     }
 
     // Update content
@@ -332,9 +355,42 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         <button
           className="rt-button"
           disabled={readOnly}
-          onClick={() => toggleHeaderStyle()}
+          onClick={() => setShowHeaderPopover(!showHeaderPopover)}
         >
-          <b>H</b>
+          <img
+            src={!readOnly ? FontSizeIcon : FontSizeIconDisabled}
+            alt="Font Size Icon"
+            className="rt-icon"
+          />
+          {/* Popover for header styles */}
+          {showHeaderPopover && (
+            <div className="rt-headerPopover">
+              <button
+                className="rt-button"
+                onClick={() => handleHeaderStyleChange("H1")}
+              >
+                <b>
+                  H<sup>1</sup>
+                </b>
+              </button>
+              <button
+                className="rt-button"
+                onClick={() => handleHeaderStyleChange("H2")}
+              >
+                <b>
+                  H<sup>2</sup>
+                </b>
+              </button>
+              <button
+                className="rt-button"
+                onClick={() => handleHeaderStyleChange("H3")}
+              >
+                <b>
+                  H<sup>3</sup>
+                </b>
+              </button>
+            </div>
+          )}
         </button>
         <button
           className="rt-button"
