@@ -440,6 +440,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
               </button>
               <button
                 className="rt-button"
+                style={{ marginRight: 0 }}
                 onClick={() => removeHeadersFromSelection()}
               >
                 <img className="rt-icon" src={TextIcon} alt="Text Icon" />
