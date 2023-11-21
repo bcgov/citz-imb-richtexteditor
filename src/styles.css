@@ -102,13 +102,13 @@
 
 .rt-icon {
   vertical-align: middle;
-  padding-bottom: 2px;
-  width: 17px;
-  height: 17px;
+  padding-bottom: 3px;
+  width: 16px;
+  height: 16px;
 }
 
-.rt-button:has(.icon) {
-  margin-left: 4px;
+.rt-button:has(.rt-icon) {
+  margin-left: 2px;
 }
 
 .rt-yellowHighlight {
@@ -119,10 +119,36 @@
 .rt-headerPopover {
   position: relative;
   display: flex;
-  top: 25%;
+  top: 34%;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 1px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 5px;
   width: fit-content;
   background-color: #fff;
+}
+
+.rt-linkPopover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: 5px;
+  top: 34%;
+  border: 1px solid #ccc;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 5px;
+  width: fit-content;
+  background-color: #fff;
+}
+
+.rt-input {
+  border: 1px solid #a0a0a0;
+  border-radius: 5px;
+  outline: none;
+}
+
+.rt-input:focus {
+  border-color: rgb(40, 127, 226);
 }

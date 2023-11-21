@@ -4,6 +4,7 @@ import {
   FontSizeIconDisabled,
   HighlighterIcon,
   HighlighterIconDisabled,
+  InsertIcon,
   LinkIcon,
   LinkIconDisabled,
   ListIcon,
@@ -68,6 +69,22 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
   const handleHeaderStyleChange = (size) => {
     toggleHeaderStyle(size);
     setShowHeaderPopover(false); // Hide popover
+  };
+
+  // State to manage popover visibility
+  const [showLinkPopover, setShowLinkPopover] = useState(false);
+
+  // State to manage link inputs
+  const [link, setLink] = useState("");
+  const [linkText, setLinkText] = useState("");
+
+  // Function to handle link style change and close popover
+  const handleLinkStyleChange = () => {
+    //toggleStyle("A");
+    setShowLinkPopover(false); // Hide popover
+    // Reset state
+    setLink("");
+    setLinkText("");
   };
 
   const toggleStyle = (tag: HTMLTag, className?: string) => {
@@ -394,14 +411,18 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
           disabled={readOnly}
           onClick={() => toggleStyle("I")}
         >
-          <i>I</i>
+          <b>
+            <i>I</i>
+          </b>
         </button>
         <button
           className="rt-button"
           disabled={readOnly}
           onClick={() => toggleStyle("S")}
         >
-          <s>S</s>
+          <b>
+            <s>S</s>
+          </b>
         </button>
         <button
           className="rt-button"
@@ -486,13 +507,44 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         <button
           className="rt-button"
           disabled={readOnly}
-          onClick={() => toggleStyle("P", "rt-yellowHighlight")}
+          onClick={() => setShowLinkPopover(!showLinkPopover)}
         >
           <img
             src={!readOnly ? LinkIcon : LinkIconDisabled}
             alt="Link Icon"
             className="rt-icon"
           />
+          {/* Popover for link styles */}
+          {showLinkPopover && !readOnly && (
+            <div className="rt-linkPopover">
+              <div>
+                <input
+                  placeholder="URL"
+                  className="rt-input"
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) => {
+                    setLink(e.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <input
+                  placeholder="Text"
+                  className="rt-input"
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) => {
+                    setLinkText(e.target.value);
+                  }}
+                />
+              </div>
+              <button
+                className="rt-button"
+                onClick={() => handleLinkStyleChange()}
+              >
+                <img src={InsertIcon} alt="Insert Icon" className="rt-icon" />
+              </button>
+            </div>
+          )}
         </button>
       </div>
       <div

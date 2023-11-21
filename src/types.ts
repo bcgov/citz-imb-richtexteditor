@@ -6,7 +6,17 @@ export type RichTextEditorProps = {
   readOnly?: boolean;
 };
 
-export type HTMLTag = "B" | "I" | "S" | "H1" | "H2" | "H3" | "P" | "LI" | "DIV";
+export type HTMLTag =
+  | "B"
+  | "I"
+  | "S"
+  | "H1"
+  | "H2"
+  | "H3"
+  | "P"
+  | "LI"
+  | "DIV"
+  | "A";
 
 export type SelectionContext = {
   currentNode: Node | null;
