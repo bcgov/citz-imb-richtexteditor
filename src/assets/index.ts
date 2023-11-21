@@ -7,3 +7,5 @@ export { default as HighlighterIconDisabled } from "./HighlighterIconDisabled.sv
 export { default as FontSizeIcon } from "./FontSizeIcon.svg";
 export { default as FontSizeIconDisabled } from "./FontSizeIconDisabled.svg";
 export { default as TextIcon } from "./TextIcon.svg";
+export { default as LinkIcon } from "./LinkIcon.svg";
+export { default as LinkIconDisabled } from "./LinkIconDisabled.svg";

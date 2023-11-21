@@ -103,8 +103,8 @@
 .rt-icon {
   vertical-align: middle;
   padding-bottom: 2px;
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
 }
 
 .rt-button:has(.icon) {

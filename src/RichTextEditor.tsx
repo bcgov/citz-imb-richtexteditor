@@ -4,6 +4,8 @@ import {
   FontSizeIconDisabled,
   HighlighterIcon,
   HighlighterIconDisabled,
+  LinkIcon,
+  LinkIconDisabled,
   ListIcon,
   ListIconDisabled,
   NumberedListIcon,
@@ -451,6 +453,17 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         <button
           className="rt-button"
           disabled={readOnly}
+          onClick={() => toggleStyle("P", "rt-yellowHighlight")}
+        >
+          <img
+            src={!readOnly ? HighlighterIcon : HighlighterIconDisabled}
+            alt="Highlighter Icon"
+            className="rt-icon"
+          />
+        </button>
+        <button
+          className="rt-button"
+          disabled={readOnly}
           onClick={() => toggleListStyle("UL")}
         >
           <img
@@ -476,8 +489,8 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
           onClick={() => toggleStyle("P", "rt-yellowHighlight")}
         >
           <img
-            src={!readOnly ? HighlighterIcon : HighlighterIconDisabled}
-            alt="Highlighter Icon"
+            src={!readOnly ? LinkIcon : LinkIconDisabled}
+            alt="Link Icon"
             className="rt-icon"
           />
         </button>
