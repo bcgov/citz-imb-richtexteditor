@@ -71,9 +71,22 @@
   margin: 0;
 }
 
-.rt-content h3 {
+.rt-content h1, h2, h3 {
   margin-top: 0;
   margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.rt-content h1 {
+  font-size: xx-large;
+}
+
+.rt-content h2 {
+  font-size: x-large;
+}
+
+.rt-content h3 {
+  font-size: large;
 }
 
 .rt-button[disabled] {
@@ -101,4 +114,15 @@
 .rt-yellowHighlight {
   display: inline;
   background-color: yellow;
+}
+
+.rt-headerPopover {
+  position: relative;
+  display: flex;
+  top: 25%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 1px;
+  width: fit-content;
+  background-color: #fff;
 }
