@@ -8,5 +8,7 @@ export { default as FontSizeIcon } from "./FontSizeIcon.svg";
 export { default as FontSizeIconDisabled } from "./FontSizeIconDisabled.svg";
 export { default as LinkIcon } from "./LinkIcon.svg";
 export { default as LinkIconDisabled } from "./LinkIconDisabled.svg";
+export { default as UndoIcon } from "./UndoIcon.svg";
+export { default as UndoIconDisabled } from "./UndoIconDisabled.svg";
 export { default as TextIcon } from "./TextIcon.svg";
 export { default as InsertIcon } from "./InsertIcon.svg";

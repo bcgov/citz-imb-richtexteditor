@@ -1,5 +1,5 @@
 import "./styles.css";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { RichTextEditorProps } from "./types";
 import { handleChange, handleKeyDown } from "./utils";
 import { Toolbar } from "./Toolbar";
@@ -10,6 +10,9 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
   // Using useRef hook to get a direct reference to the contentEditable div
   const contentRef = useRef<HTMLDivElement>(null);
 
+  // Track undo actions
+  const [undoStack, setUndoStack] = useState([]);
+
   // Update content in the contentEditable when state changes
   useEffect(() => {
     if (contentRef.current) {
@@ -18,6 +21,9 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
       }
       // Track readOnly property changes
       contentRef.current.contentEditable = String(!readOnly);
+
+      // Add change to undo stack
+      setUndoStack((prev) => [...prev, content]);
     }
   }, [content, readOnly]);
 
@@ -28,6 +34,8 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         content={content}
         setContent={setContent}
         readOnly={readOnly}
+        undoStack={undoStack}
+        setUndoStack={setUndoStack}
       />
       <div
         ref={contentRef}

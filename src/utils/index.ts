@@ -11,3 +11,4 @@ export { toggleListStyle } from "./toggleListStyle";
 export { toggleHeaderStyle } from "./toggleHeaderStyle";
 export { removeHeadersFromSelection } from "./removeHeadersFromSelection";
 export { handleKeyDown } from "./handleKeyDown";
+export { undoAction } from "./undoAction";
