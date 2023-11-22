@@ -1,6 +1,5 @@
 import { HandleChangeProps } from "../types";
 import { sanitizeContent } from "./sanitizeContent";
-import { setCursorAtStart } from "./setCursorAtStart";
 
 // Update content state.
 export const handleChange = (props: HandleChangeProps) => {
@@ -27,8 +26,9 @@ export const handleChange = (props: HandleChangeProps) => {
       }
     });
 
-    // Handle edge case for cursor positioning.
-    if (content === "<br>") setCursorAtStart(contentRef);
+    // Handle <br> at beginning of content after backspacing content
+    if (content === "<br>")
+      handleChange({ contentRef, content: "", setContent });
 
     const sanitizedContent = sanitizeContent(contentRef.current.innerHTML);
     setContent(sanitizedContent);

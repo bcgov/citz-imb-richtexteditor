@@ -16,16 +16,18 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
   };
 
   return (
-    <button
-      className="rt-button"
-      disabled={readOnly}
-      onClick={() => setShowPopover(!showPopover)}
-    >
-      <img
-        src={!readOnly ? FontSizeIcon : FontSizeIconDisabled}
-        alt="Font Size Icon"
-        className="rt-icon"
-      />
+    <>
+      <button
+        className="rt-button"
+        disabled={readOnly}
+        onClick={() => setShowPopover(!showPopover)}
+      >
+        <img
+          src={!readOnly ? FontSizeIcon : FontSizeIconDisabled}
+          alt="Font Size Icon"
+          className="rt-icon"
+        />
+      </button>
       {/* Popover */}
       {showPopover && !readOnly && (
         <div className="rt-headerPopover">
@@ -64,6 +66,6 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
           </button>
         </div>
       )}
-    </button>
+    </>
   );
 };
