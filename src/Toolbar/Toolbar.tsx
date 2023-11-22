@@ -123,7 +123,6 @@ export const Toolbar = (props: ToolbarProps) => {
           className="rt-icon"
         />
       </button>
-      <InsertLinkButton readOnly={readOnly} />
     </div>
   );
 };
