@@ -8,6 +8,8 @@ import {
   ListIconDisabled,
   NumberedListIcon,
   NumberedListIconDisabled,
+  UndoIcon,
+  UndoIconDisabled,
 } from "../assets";
 import { InsertLinkButton } from "./components/InsertLinkButton";
 import { handleChange, toggleListStyle, toggleStyle } from "../utils";
@@ -17,6 +19,7 @@ export const Toolbar = (props: ToolbarProps) => {
 
   return (
     <div className="rt-toolbar">
+      {/* BOLD */}
       <button
         className="rt-button"
         disabled={readOnly}
@@ -31,6 +34,7 @@ export const Toolbar = (props: ToolbarProps) => {
       >
         <b>B</b>
       </button>
+      {/* ITALICS */}
       <button
         className="rt-button"
         disabled={readOnly}
@@ -47,6 +51,7 @@ export const Toolbar = (props: ToolbarProps) => {
           <i>I</i>
         </b>
       </button>
+      {/* STRIKETHROUGH */}
       <button
         className="rt-button"
         disabled={readOnly}
@@ -63,11 +68,13 @@ export const Toolbar = (props: ToolbarProps) => {
           <s>S</s>
         </b>
       </button>
+      {/* FONT SIZE */}
       <FontSizeButton
         readOnly={readOnly}
         contentRef={contentRef}
         handleChange={() => handleChange({ contentRef, content, setContent })}
       />
+      {/* HIGHLIGHTER */}
       <button
         className="rt-button"
         disabled={readOnly}
@@ -87,6 +94,7 @@ export const Toolbar = (props: ToolbarProps) => {
           className="rt-icon"
         />
       </button>
+      {/* BULLET LIST */}
       <button
         className="rt-button"
         disabled={readOnly}
@@ -105,6 +113,7 @@ export const Toolbar = (props: ToolbarProps) => {
           className="rt-icon"
         />
       </button>
+      {/* NUMBERED LIST */}
       <button
         className="rt-button"
         disabled={readOnly}
@@ -123,11 +132,20 @@ export const Toolbar = (props: ToolbarProps) => {
           className="rt-icon"
         />
       </button>
+      {/* INSERT LINK */}
       <InsertLinkButton
         readOnly={readOnly}
         contentRef={contentRef}
         handleChange={() => handleChange({ contentRef, content, setContent })}
       />
+      {/* UNDO */}
+      <button className="rt-button" disabled={readOnly} onClick={() => {}}>
+        <img
+          src={!readOnly ? UndoIcon : UndoIconDisabled}
+          alt="Undo Icon"
+          className="rt-icon"
+        />
+      </button>
     </div>
   );
 };
