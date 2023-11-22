@@ -15,6 +15,8 @@ export type ToolbarProps = {
   contentRef: MutableRefObject<HTMLDivElement>;
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
+  undoStack: string[];
+  setUndoStack: Dispatch<SetStateAction<string[]>>;
 };
 
 export type FontSizeButtonProps = {
@@ -70,6 +72,12 @@ export type HandleKeyDownProps = {
   e: React.KeyboardEvent<HTMLDivElement>;
   contentRef: MutableRefObject<HTMLDivElement>;
   handleChange: () => void;
+};
+
+export type UndoActionProps = {
+  undoStack: string[];
+  setUndoStack: Dispatch<SetStateAction<string[]>>;
+  setContent: Dispatch<SetStateAction<string>>;
 };
 
 export type GetParentElementProps = {

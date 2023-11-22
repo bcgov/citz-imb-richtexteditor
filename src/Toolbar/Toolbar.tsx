@@ -12,10 +12,22 @@ import {
   UndoIconDisabled,
 } from "../assets";
 import { InsertLinkButton } from "./components/InsertLinkButton";
-import { handleChange, toggleListStyle, toggleStyle } from "../utils";
+import {
+  handleChange,
+  toggleListStyle,
+  toggleStyle,
+  undoAction,
+} from "../utils";
 
 export const Toolbar = (props: ToolbarProps) => {
-  const { readOnly = false, contentRef, content, setContent } = props;
+  const {
+    readOnly = false,
+    contentRef,
+    content,
+    setContent,
+    undoStack,
+    setUndoStack,
+  } = props;
 
   return (
     <div className="rt-toolbar">
@@ -139,7 +151,17 @@ export const Toolbar = (props: ToolbarProps) => {
         handleChange={() => handleChange({ contentRef, content, setContent })}
       />
       {/* UNDO */}
-      <button className="rt-button" disabled={readOnly} onClick={() => {}}>
+      <button
+        className="rt-button"
+        disabled={readOnly}
+        onClick={() =>
+          undoAction({
+            undoStack,
+            setUndoStack,
+            setContent,
+          })
+        }
+      >
         <img
           src={!readOnly ? UndoIcon : UndoIconDisabled}
           alt="Undo Icon"

@@ -21,6 +21,9 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
       }
       // Track readOnly property changes
       contentRef.current.contentEditable = String(!readOnly);
+
+      // Add change to undo stack
+      setUndoStack((prev) => [...prev, content]);
     }
   }, [content, readOnly]);
 
@@ -31,6 +34,8 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         content={content}
         setContent={setContent}
         readOnly={readOnly}
+        undoStack={undoStack}
+        setUndoStack={setUndoStack}
       />
       <div
         ref={contentRef}
