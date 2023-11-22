@@ -16,44 +16,46 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
   };
 
   return (
-    <button
-      className="rt-button"
-      disabled={readOnly}
-      onClick={() => setShowPopover(!showPopover)}
-    >
-      <img
-        src={!readOnly ? FontSizeIcon : FontSizeIconDisabled}
-        alt="Font Size Icon"
-        className="rt-icon"
-      />
+    <>
+      <button
+        className="rt-button"
+        disabled={readOnly}
+        onClick={() => setShowPopover(!showPopover)}
+      >
+        <img
+          src={!readOnly ? FontSizeIcon : FontSizeIconDisabled}
+          alt="Font Size Icon"
+          className="rt-icon"
+        />
+      </button>
       {/* Popover */}
       {showPopover && !readOnly && (
         <div className="rt-headerPopover">
-          <div
+          <button
             className="rt-button"
             onClick={() => handleHeaderStyleChange("H1")}
           >
             <b>
               H<sup>1</sup>
             </b>
-          </div>
-          <div
+          </button>
+          <button
             className="rt-button"
             onClick={() => handleHeaderStyleChange("H2")}
           >
             <b>
               H<sup>2</sup>
             </b>
-          </div>
-          <div
+          </button>
+          <button
             className="rt-button"
             onClick={() => handleHeaderStyleChange("H3")}
           >
             <b>
               H<sup>3</sup>
             </b>
-          </div>
-          <div
+          </button>
+          <button
             className="rt-button"
             style={{ marginRight: 0 }}
             onClick={() =>
@@ -61,9 +63,9 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
             }
           >
             <img className="rt-icon" src={TextIcon} alt="Text Icon" />
-          </div>
+          </button>
         </div>
       )}
-    </button>
+    </>
   );
 };

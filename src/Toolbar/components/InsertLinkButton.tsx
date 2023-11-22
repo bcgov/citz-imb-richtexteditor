@@ -58,12 +58,14 @@ export const InsertLinkButton = (props: InsertLinkButtonProps) => {
   };
 
   return (
-    <button className="rt-button" disabled={readOnly} onClick={togglePopover}>
-      <img
-        src={!readOnly ? LinkIcon : LinkIconDisabled}
-        alt="Link Icon"
-        className="rt-icon"
-      />
+    <>
+      <button className="rt-button" disabled={readOnly} onClick={togglePopover}>
+        <img
+          src={!readOnly ? LinkIcon : LinkIconDisabled}
+          alt="Link Icon"
+          className="rt-icon"
+        />
+      </button>
       {/* Popover */}
       {showPopover && !readOnly && (
         <div className="rt-linkPopover">
@@ -92,7 +94,7 @@ export const InsertLinkButton = (props: InsertLinkButtonProps) => {
               onKeyDown={handleKeyDown}
             />
           </div>
-          <div
+          <button
             className="rt-button"
             onClick={(e) => {
               e.stopPropagation();
@@ -100,9 +102,9 @@ export const InsertLinkButton = (props: InsertLinkButtonProps) => {
             }}
           >
             <img src={InsertIcon} alt="Insert Icon" className="rt-icon" />
-          </div>
+          </button>
         </div>
       )}
-    </button>
+    </>
   );
 };

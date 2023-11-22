@@ -117,9 +117,10 @@
 }
 
 .rt-headerPopover {
-  position: relative;
+  position: absolute;
   display: flex;
-  top: 34%;
+  top: 35px;
+  left: 9%;
   border: 1px solid #ccc;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -129,12 +130,13 @@
 }
 
 .rt-linkPopover {
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
   text-align: left;
   gap: 5px;
-  top: 34%;
+  top: 35px;
+  left: 21.5%;
   border: 1px solid #ccc;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
