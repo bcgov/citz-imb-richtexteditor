@@ -5,7 +5,7 @@ import { removeTagFromSelection } from "./removeTagFromSelection";
 import { setCursorAfterElement } from "./setCursorAfterElement";
 
 export const toggleStyle = (props: ToggleStyleProps) => {
-  const { contentRef, handleChange, tag, className } = props;
+  const { contentRef, handleChange, tag, className, options } = props;
 
   const { selection, range } = getSelectionContext();
   const styledParentElement = getParentElement({
@@ -21,22 +21,57 @@ export const toggleStyle = (props: ToggleStyleProps) => {
       // Move cursor just outside of style element
       setCursorAfterElement(styledParentElement);
     } else {
-      // Add style
-      const element = document.createElement(tag);
-      const textNode = document.createTextNode("\u200B"); // Zero-width space
-      element.appendChild(textNode);
+      if (tag === "A") {
+        // Inserting links
+        if (
+          options?.link?.url === "" ||
+          options?.link?.linkText === "" ||
+          !options?.link?.selectionContext
+        )
+          return;
 
-      // Add class names if provided
-      if (className) {
-        element.className = className;
-      }
+        const element = document.createElement("A") as HTMLAnchorElement;
+        const textNode = document.createTextNode(options.link.linkText);
+        element.appendChild(textNode);
 
-      if (range) {
-        range.insertNode(element);
-        range.setStart(textNode, 1);
-        range.collapse(true);
-        selection?.removeAllRanges();
-        selection?.addRange(range);
+        // Set the href and target attributes
+        element.href = options.link.url;
+        element.target = "_blank"; // Opens in new tab.
+
+        // Add class names if provided
+        if (className) element.className = className;
+
+        // Replace range and selection because of inputs in link insert button
+        const range = options.link.selectionContext?.range;
+        const selection = options.link.selectionContext?.selection;
+
+        if (range) {
+          range.insertNode(element);
+          range.setStart(textNode, 1);
+          range.collapse(true);
+          selection?.removeAllRanges();
+          selection?.addRange(range);
+          setCursorAfterElement(element);
+        }
+
+        // Update content
+        handleChange();
+      } else {
+        // Add style
+        const element = document.createElement(tag);
+        const textNode = document.createTextNode("\u200B"); // Zero-width space
+        element.appendChild(textNode);
+
+        // Add class names if provided
+        if (className) element.className = className;
+
+        if (range) {
+          range.insertNode(element);
+          range.setStart(textNode, 1);
+          range.collapse(true);
+          selection?.removeAllRanges();
+          selection?.addRange(range);
+        }
       }
     }
   } else {
@@ -59,9 +94,7 @@ export const toggleStyle = (props: ToggleStyleProps) => {
       const element = document.createElement(tag);
 
       // Add class names if provided
-      if (className) {
-        element.className = className;
-      }
+      if (className) element.className = className;
 
       if (range) {
         element.appendChild(range?.extractContents());

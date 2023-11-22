@@ -52,7 +52,6 @@ export const handleKeyDown = (props: HandleKeyDownProps) => {
       }
       setCursorAtStartOfElement(newP);
     }
-
-    handleChange();
   }
+  handleChange();
 };

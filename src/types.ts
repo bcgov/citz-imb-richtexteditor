@@ -25,6 +25,8 @@ export type FontSizeButtonProps = {
 
 export type InsertLinkButtonProps = {
   readOnly?: boolean;
+  contentRef: MutableRefObject<HTMLDivElement>;
+  handleChange: () => void;
 };
 
 export type ToggleStyleProps = {
@@ -32,6 +34,13 @@ export type ToggleStyleProps = {
   handleChange: () => void;
   tag: HTMLTag;
   className?: string;
+  options?: {
+    link?: {
+      url: string;
+      linkText: string;
+      selectionContext: SelectionContext;
+    };
+  };
 };
 
 export type ToggleListStyleProps = {

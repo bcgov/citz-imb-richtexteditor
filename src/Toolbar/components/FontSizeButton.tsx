@@ -29,31 +29,31 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
       {/* Popover */}
       {showPopover && !readOnly && (
         <div className="rt-headerPopover">
-          <button
+          <div
             className="rt-button"
             onClick={() => handleHeaderStyleChange("H1")}
           >
             <b>
               H<sup>1</sup>
             </b>
-          </button>
-          <button
+          </div>
+          <div
             className="rt-button"
             onClick={() => handleHeaderStyleChange("H2")}
           >
             <b>
               H<sup>2</sup>
             </b>
-          </button>
-          <button
+          </div>
+          <div
             className="rt-button"
             onClick={() => handleHeaderStyleChange("H3")}
           >
             <b>
               H<sup>3</sup>
             </b>
-          </button>
-          <button
+          </div>
+          <div
             className="rt-button"
             style={{ marginRight: 0 }}
             onClick={() =>
@@ -61,7 +61,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
             }
           >
             <img className="rt-icon" src={TextIcon} alt="Text Icon" />
-          </button>
+          </div>
         </div>
       )}
     </button>
