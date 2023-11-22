@@ -25,13 +25,19 @@ Originally created by IMB developers working on the [DPIA] product.
 - [General Information](#general-information)
 - [Installing the Package](#installing-the-package) - **Start Here!**
 - [Basic Setup Guide](#basic-setup-guide) - Setting up after installing.
-- [Sanitization](#sanitization) - How the output is sanitized.
+- [Sanitization](#better-than-nothing-sanitization) - How the output is sanitized.
 
 ## General Information
 
 - For running on a NodeJS:20 React 18 app.
 - Works with Vanilla JavaScript or Typescript 5.
 - Output is HTML content in string form, not markdown.
+
+<br />
+
+<img src="./assets/example.PNG" alt="Example">
+
+<img src="./assets/example_readOnly.PNG" alt="Example ReadOnly">
 
 ---
 
@@ -85,7 +91,7 @@ const MyComponent = () => {
 
 <br />
 
-## Sanitization
+## Better Than Nothing Sanitization
 
 The `RichTextEditor` provides a built in function `sanitizeContent` which is designed to take a string containing HTML content and sanitize it by removing potentially malicious code. Here's a summary of what this sanitization handles and what it doesn't:
 
@@ -105,7 +111,7 @@ The `RichTextEditor` provides a built in function `sanitizeContent` which is des
 
 7. **Removal of XML and namespace attributes:** Attributes like `xmlns` or those starting with `xml` (which are used to define namespaces in XML) are stripped out.
 
-8. **Filtering out non-allowlisted tags:** The function also has a mechanism to loop through the HTML content, removing any tags that are not explicitly listed in the allowlist. Currently these are `"p", "br", "h", "ul", "li", "b", "i", "s", "u"`.
+8. **Filtering out non-allowlisted tags:** The function also has a mechanism to loop through the HTML content, removing any tags that are not explicitly listed in the allowlist. Currently these are `"p", "br", "h", "ul", "ol", "li", "b", "i", "s", "u", "a"`.
 
 **What it doesn't handle:**
 
