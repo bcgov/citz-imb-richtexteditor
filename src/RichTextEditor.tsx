@@ -1,7 +1,7 @@
 import "./styles.css";
 import React, { useRef, useEffect, useState } from "react";
 import { RichTextEditorProps } from "./types";
-import { handleChange, handleKeyDown } from "./utils";
+import { handleChange, handleKeyDown, undoAction } from "./utils";
 import { Toolbar } from "./Toolbar";
 
 export const RichTextEditor = (props: RichTextEditorProps) => {
@@ -47,6 +47,8 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
             e,
             handleChange: () =>
               handleChange({ contentRef, content, setContent }),
+            undoAction: () =>
+              undoAction({ undoStack, setUndoStack, setContent }),
           })
         }
         className="rt-content"

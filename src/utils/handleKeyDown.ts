@@ -5,7 +5,7 @@ import { setCursorAtStartOfElement } from "./setCursorAtStartOfElement";
 
 // Handle when a key is pressed.
 export const handleKeyDown = (props: HandleKeyDownProps) => {
-  const { contentRef, e, handleChange } = props;
+  const { contentRef, e, handleChange, undoAction } = props;
 
   const { selection, range, currentNode } = getSelectionContext();
   const parentLi = getParentElement({ contentRef, tag: "LI" });
@@ -72,6 +72,11 @@ export const handleKeyDown = (props: HandleKeyDownProps) => {
         }
       }
     }
+    // Update state
+    handleChange();
+  } else if (e.ctrlKey && e.key === "z") {
+    // Handle undo action
+    e.preventDefault();
+    undoAction();
   }
-  handleChange();
 };

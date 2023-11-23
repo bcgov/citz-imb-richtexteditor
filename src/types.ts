@@ -72,6 +72,7 @@ export type HandleKeyDownProps = {
   e: React.KeyboardEvent<HTMLDivElement>;
   contentRef: MutableRefObject<HTMLDivElement>;
   handleChange: () => void;
+  undoAction: () => void;
 };
 
 export type UndoActionProps = {
