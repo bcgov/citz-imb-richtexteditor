@@ -33,7 +33,10 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
         <div className="rt-headerPopover">
           <button
             className="rt-button"
-            onClick={() => handleHeaderStyleChange("H1")}
+            onClick={() => {
+              handleHeaderStyleChange("H1");
+              setShowPopover(!showPopover);
+            }}
           >
             <b>
               H<sup>1</sup>
@@ -41,7 +44,10 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
           </button>
           <button
             className="rt-button"
-            onClick={() => handleHeaderStyleChange("H2")}
+            onClick={() => {
+              handleHeaderStyleChange("H2");
+              setShowPopover(!showPopover);
+            }}
           >
             <b>
               H<sup>2</sup>
@@ -49,7 +55,10 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
           </button>
           <button
             className="rt-button"
-            onClick={() => handleHeaderStyleChange("H3")}
+            onClick={() => {
+              handleHeaderStyleChange("H3");
+              setShowPopover(!showPopover);
+            }}
           >
             <b>
               H<sup>3</sup>
@@ -58,9 +67,10 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
           <button
             className="rt-button"
             style={{ marginRight: 0 }}
-            onClick={() =>
-              removeHeadersFromSelection({ contentRef, handleChange })
-            }
+            onClick={() => {
+              removeHeadersFromSelection({ contentRef, handleChange });
+              setShowPopover(!showPopover);
+            }}
           >
             <img className="rt-icon" src={TextIcon} alt="Text Icon" />
           </button>

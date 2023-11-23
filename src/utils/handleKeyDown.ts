@@ -8,6 +8,7 @@ export const handleKeyDown = (props: HandleKeyDownProps) => {
   const { contentRef, e, handleChange, undoAction } = props;
 
   const { selection, range, currentNode } = getSelectionContext();
+  const parentElement = getParentElement({ contentRef });
   const parentLi = getParentElement({ contentRef, tag: "LI" });
 
   if (e.key === "Enter") {
@@ -54,21 +55,22 @@ export const handleKeyDown = (props: HandleKeyDownProps) => {
             newP.appendChild(document.createElement("br"));
           }
 
-          if (textNode.parentNode.nodeName === "P") {
-            // Insert after parent
+          if (!parentElement) {
+            // Insert newline when on first line and text doesnt have parent
             textNode.parentNode.insertBefore(newP, textNode.nextSibling);
           } else {
-            // Insert as a sibling if in a text node
-            textNode.parentNode.insertBefore(newP, textNode.nextSibling);
+            // Insert newline after parent
+            parentElement.after(newP);
           }
 
           setCursorAtStartOfElement(newP);
-        } else if (textNode.nodeName === "P") {
-          // Newline logic for <p> elements
-          const newElement = document.createElement("p");
-          newElement.appendChild(document.createElement("br"));
-          textNode.parentNode.insertBefore(newElement, textNode.nextSibling);
-          setCursorAtStartOfElement(newElement);
+        } else {
+          if (parentElement) {
+            const newElement = document.createElement("p");
+            newElement.appendChild(document.createElement("br"));
+            textNode.parentNode.insertBefore(newElement, textNode.nextSibling);
+            setCursorAtStartOfElement(newElement);
+          }
         }
       }
     }
