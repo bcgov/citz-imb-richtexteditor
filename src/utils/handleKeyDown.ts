@@ -7,8 +7,7 @@ import { setCursorAtStartOfElement } from "./setCursorAtStartOfElement";
 export const handleKeyDown = (props: HandleKeyDownProps) => {
   const { contentRef, e, handleChange } = props;
 
-  const { currentNode } = getSelectionContext();
-  const parentElement = getParentElement({ contentRef });
+  const { selection, range, currentNode } = getSelectionContext();
   const parentLi = getParentElement({ contentRef, tag: "LI" });
 
   if (e.key === "Enter") {
@@ -38,19 +37,40 @@ export const handleKeyDown = (props: HandleKeyDownProps) => {
         setCursorAtStartOfElement(newLi);
       }
     } else {
-      // For non-list items, insert a new paragraph
-      const newP = document.createElement("p");
-      const br = document.createElement("br");
-      newP.appendChild(br);
+      // General case for non-list items
+      if (selection.rangeCount > 0 && range.collapsed) {
+        const caretPos = range.startOffset;
+        const textNode = range.startContainer;
 
-      if (parentElement && parentElement.nextSibling) {
-        // Insert the new paragraph after the parent element
-        parentElement.parentNode?.insertBefore(newP, parentElement.nextSibling);
-      } else {
-        // If there is no parent element, append the new paragraph to the content editable div
-        contentRef.current?.appendChild(newP);
+        if (textNode.nodeType === Node.TEXT_NODE) {
+          // Split text at caret position and create a new paragraph
+          const splitText = textNode.textContent.substring(caretPos);
+          textNode.textContent = textNode.textContent.substring(0, caretPos);
+
+          const newP = document.createElement("p");
+          if (splitText.length > 0) {
+            newP.textContent = splitText;
+          } else {
+            newP.appendChild(document.createElement("br"));
+          }
+
+          if (textNode.parentNode.nodeName === "P") {
+            // Insert after parent
+            textNode.parentNode.insertBefore(newP, textNode.nextSibling);
+          } else {
+            // Insert as a sibling if in a text node
+            textNode.parentNode.insertBefore(newP, textNode.nextSibling);
+          }
+
+          setCursorAtStartOfElement(newP);
+        } else if (textNode.nodeName === "P") {
+          // Newline logic for <p> elements
+          const newElement = document.createElement("p");
+          newElement.appendChild(document.createElement("br"));
+          textNode.parentNode.insertBefore(newElement, textNode.nextSibling);
+          setCursorAtStartOfElement(newElement);
+        }
       }
-      setCursorAtStartOfElement(newP);
     }
   }
   handleChange();
