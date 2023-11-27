@@ -48,22 +48,47 @@ export const handleKeyDown = (props: HandleKeyDownProps) => {
           const splitText = textNode.textContent.substring(caretPos);
           textNode.textContent = textNode.textContent.substring(0, caretPos);
 
-          const newP = document.createElement("p");
-          if (splitText.length > 0) {
-            newP.textContent = splitText;
-          } else {
-            newP.appendChild(document.createElement("br"));
-          }
+          if (parentElement && parentElement.childElementCount > 0) {
+            // Parent element has child elements (not just text)
+            const newP = document.createElement("p");
+            let sibling = textNode.nextSibling;
 
-          if (!parentElement) {
-            // Insert newline when on first line and text doesnt have parent
-            textNode.parentNode.insertBefore(newP, textNode.nextSibling);
-          } else {
-            // Insert newline after parent
+            // Add siblings and text to newline
+            while (sibling) {
+              const nextSibling = sibling.nextSibling;
+              newP.appendChild(sibling);
+              sibling = nextSibling;
+            }
+
+            if (splitText.length > 0) {
+              newP.insertBefore(
+                document.createTextNode(splitText),
+                newP.firstChild
+              );
+            } else if (newP.childNodes.length === 0) {
+              newP.appendChild(document.createElement("br"));
+            }
+
             parentElement.after(newP);
-          }
+            setCursorAtStartOfElement(newP);
+          } else {
+            const newP = document.createElement("p");
+            if (splitText.length > 0) {
+              newP.textContent = splitText;
+            } else {
+              newP.appendChild(document.createElement("br"));
+            }
 
-          setCursorAtStartOfElement(newP);
+            if (!parentElement) {
+              // Insert newline when on first line and text doesnt have parent
+              textNode.parentNode.insertBefore(newP, textNode.nextSibling);
+            } else {
+              // Insert newline after parent
+              parentElement.after(newP);
+            }
+
+            setCursorAtStartOfElement(newP);
+          }
         } else {
           if (parentElement) {
             const newElement = document.createElement("p");
