@@ -95,7 +95,7 @@ export const Toolbar = (props: ToolbarProps) => {
             contentRef,
             handleChange: () =>
               handleChange({ contentRef, content, setContent }),
-            tag: "P",
+            tag: "SPAN",
             className: "rt-yellowHighlight",
           })
         }

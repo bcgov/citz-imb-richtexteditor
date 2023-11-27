@@ -101,7 +101,8 @@ export type HTMLTag =
   | "P"
   | "LI"
   | "DIV"
-  | "A";
+  | "A"
+  | "SPAN";
 
 export type SelectionContext = {
   currentNode: Node | null;
