@@ -5,9 +5,9 @@ import { setCursorAtStartOfElement } from "./setCursorAtStartOfElement";
 
 // Handle when a key is pressed.
 export const handleKeyDown = (props: HandleKeyDownProps) => {
-  const { contentRef, e, handleChange } = props;
+  const { contentRef, e, handleChange, undoAction } = props;
 
-  const { currentNode } = getSelectionContext();
+  const { selection, range, currentNode } = getSelectionContext();
   const parentElement = getParentElement({ contentRef });
   const parentLi = getParentElement({ contentRef, tag: "LI" });
 
@@ -38,20 +38,72 @@ export const handleKeyDown = (props: HandleKeyDownProps) => {
         setCursorAtStartOfElement(newLi);
       }
     } else {
-      // For non-list items, insert a new paragraph
-      const newP = document.createElement("p");
-      const br = document.createElement("br");
-      newP.appendChild(br);
+      // General case for non-list items
+      if (selection.rangeCount > 0 && range.collapsed) {
+        const caretPos = range.startOffset;
+        const textNode = range.startContainer;
 
-      if (parentElement && parentElement.nextSibling) {
-        // Insert the new paragraph after the parent element
-        parentElement.parentNode?.insertBefore(newP, parentElement.nextSibling);
-      } else {
-        // If there is no parent element, append the new paragraph to the content editable div
-        contentRef.current?.appendChild(newP);
+        if (textNode.nodeType === Node.TEXT_NODE) {
+          // Split text at caret position and create a new paragraph
+          const splitText = textNode.textContent.substring(caretPos);
+          textNode.textContent = textNode.textContent.substring(0, caretPos);
+
+          if (parentElement && parentElement.childElementCount > 0) {
+            // Parent element has child elements (not just text)
+            const newP = document.createElement("p");
+            let sibling = textNode.nextSibling;
+
+            // Add siblings and text to newline
+            while (sibling) {
+              const nextSibling = sibling.nextSibling;
+              newP.appendChild(sibling);
+              sibling = nextSibling;
+            }
+
+            if (splitText.length > 0) {
+              newP.insertBefore(
+                document.createTextNode(splitText),
+                newP.firstChild
+              );
+            } else if (newP.childNodes.length === 0) {
+              newP.appendChild(document.createElement("br"));
+            }
+
+            parentElement.after(newP);
+            setCursorAtStartOfElement(newP);
+          } else {
+            const newP = document.createElement("p");
+            if (splitText.length > 0) {
+              newP.textContent = splitText;
+            } else {
+              newP.appendChild(document.createElement("br"));
+            }
+
+            if (!parentElement) {
+              // Insert newline when on first line and text doesnt have parent
+              textNode.parentNode.insertBefore(newP, textNode.nextSibling);
+            } else {
+              // Insert newline after parent
+              parentElement.after(newP);
+            }
+
+            setCursorAtStartOfElement(newP);
+          }
+        } else {
+          if (parentElement) {
+            const newElement = document.createElement("p");
+            newElement.appendChild(document.createElement("br"));
+            textNode.parentNode.insertBefore(newElement, textNode.nextSibling);
+            setCursorAtStartOfElement(newElement);
+          }
+        }
       }
-      setCursorAtStartOfElement(newP);
     }
+    // Update state
+    handleChange();
+  } else if (e.ctrlKey && e.key === "z") {
+    // Handle undo action
+    e.preventDefault();
+    undoAction();
   }
-  handleChange();
 };

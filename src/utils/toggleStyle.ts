@@ -8,6 +8,7 @@ export const toggleStyle = (props: ToggleStyleProps) => {
   const { contentRef, handleChange, tag, className, options } = props;
 
   const { selection, range } = getSelectionContext();
+  // Parent element which shares the same tag and classnames
   const styledParentElement = getParentElement({
     contentRef,
     tag,
