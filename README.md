@@ -26,6 +26,7 @@ Originally created by IMB developers working on the [DPIA] product.
 - [Installing the Package](#installing-the-package) - **Start Here!**
 - [Basic Setup Guide](#basic-setup-guide) - Setting up after installing.
 - [Sanitization](#better-than-nothing-sanitization) - How the output is sanitized.
+- [Applications using RichTextEditor](#applications-using-richtexteditor) - Find examples.
 
 ## General Information
 
@@ -126,6 +127,15 @@ The `RichTextEditor` provides a built in function `sanitizeContent` which is des
 5. **Other potential threats:** This sanitization function does not consider other forms of exploits that can be hidden in seemingly benign attributes or tags that are not included in the explicit block list.
 
 In summary, this function takes a series of important steps to sanitize HTML content, particularly aimed at preventing XSS attacks, but it isn't foolproof. 
+
+[Return to Top](#bcgov-rich-text-editor-for-react)
+
+<br />
+
+## Applications using RichTextEditor
+The following applications are currently using this package:
+
+[DPIA] - Digital Privacy Impact Assessment
 
 [Return to Top](#bcgov-rich-text-editor-for-react)
 
