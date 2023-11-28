@@ -18,6 +18,7 @@ import {
   toggleStyle,
   undoAction,
 } from "../utils";
+import { Tooltip } from "./components/Tooltip";
 
 export const Toolbar = (props: ToolbarProps) => {
   const {
