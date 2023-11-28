@@ -1,4 +1,4 @@
-.rt-container, .rt-toolbar, .rt-content, .rt-button, ::after, ::before {
+.rt-container, .rt-toolbar, .rt-content, .rt-button, .rt-icon, ::after, ::before {
   box-sizing: content-box;
 }
 
