@@ -1,4 +1,4 @@
-# BCGov Rich Text Editor for React
+# BCGov RichTextEditor for React
 
 [![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](Redirect-URL)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
@@ -63,7 +63,7 @@ Originally created by IMB developers working on the [DPIA] product.
 
 3. Run `npm install` to add the package.
 
-[Return to Top](#bcgov-rich-text-editor-for-react)
+[Return to Top](#bcgov-richtexteditor-for-react)
 
 <br />
 
@@ -88,7 +88,7 @@ const MyComponent = () => {
 };
 ```
 
-[Return to Top](#bcgov-rich-text-editor-for-react)
+[Return to Top](#bcgov-richtexteditor-for-react)
 
 <br />
 
@@ -112,7 +112,7 @@ The `RichTextEditor` provides a built in function `sanitizeContent` which is des
 
 7. **Removal of XML and namespace attributes:** Attributes like `xmlns` or those starting with `xml` (which are used to define namespaces in XML) are stripped out.
 
-8. **Filtering out non-allowlisted tags:** The function also has a mechanism to loop through the HTML content, removing any tags that are not explicitly listed in the allowlist. Currently these are `"p", "br", "h", "ul", "ol", "li", "b", "i", "s", "u", "a"`.
+8. **Filtering out non-allowlisted tags:** The function also has a mechanism to loop through the HTML content, removing any tags that are not explicitly listed in the allowlist. Currently these are `"p", "br", "h", "ul", "ol", "li", "b", "i", "s", "u", "a", "span"`.
 
 **What it doesn't handle:**
 
@@ -128,7 +128,7 @@ The `RichTextEditor` provides a built in function `sanitizeContent` which is des
 
 In summary, this function takes a series of important steps to sanitize HTML content, particularly aimed at preventing XSS attacks, but it isn't foolproof. 
 
-[Return to Top](#bcgov-rich-text-editor-for-react)
+[Return to Top](#bcgov-richtexteditor-for-react)
 
 <br />
 
@@ -137,7 +137,7 @@ The following applications are currently using this package:
 
 [DPIA] - Digital Privacy Impact Assessment
 
-[Return to Top](#bcgov-rich-text-editor-for-react)
+[Return to Top](#bcgov-richtexteditor-for-react)
 
 <!-- Link References -->
 

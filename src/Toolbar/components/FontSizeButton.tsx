@@ -21,6 +21,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
       <button
         className="rt-button"
         disabled={readOnly}
+        type="button"
         onClick={() => setShowPopover(!showPopover)}
       >
         <Tooltip content="Font Size">
@@ -38,6 +39,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
             className={`rt-button ${
               parentElement?.nodeName === "H1" ? "rt-button-active" : ""
             }`}
+            type="button"
             onClick={() => {
               handleHeaderStyleChange("H1");
               setShowPopover(!showPopover);
@@ -53,6 +55,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
             className={`rt-button ${
               parentElement?.nodeName === "H2" ? "rt-button-active" : ""
             }`}
+            type="button"
             onClick={() => {
               handleHeaderStyleChange("H2");
               setShowPopover(!showPopover);
@@ -68,6 +71,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
             className={`rt-button ${
               parentElement?.nodeName === "H3" ? "rt-button-active" : ""
             }`}
+            type="button"
             onClick={() => {
               handleHeaderStyleChange("H3");
               setShowPopover(!showPopover);
@@ -81,6 +85,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
           </button>
           <button
             className="rt-button"
+            type="button"
             style={{ marginRight: 0 }}
             onClick={() => {
               removeHeadersFromSelection({ contentRef, handleChange });

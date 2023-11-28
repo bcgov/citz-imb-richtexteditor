@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { InsertLinkButtonProps, SelectionContext } from "../../types";
 import { InsertIcon, LinkIcon, LinkIconDisabled } from "../../assets";
-import { getSelectionContext, handleKeyDown, toggleStyle } from "../../utils";
+import { getSelectionContext, toggleStyle } from "../../utils";
 import { Tooltip } from "./Tooltip";
 
 export const InsertLinkButton = (props: InsertLinkButtonProps) => {
@@ -77,6 +77,7 @@ export const InsertLinkButton = (props: InsertLinkButtonProps) => {
               name="rt-urlInput"
               placeholder="URL"
               className="rt-input"
+              type="text"
               onClick={(e) => e.stopPropagation()}
               onChange={(e) => {
                 setUrl(e.target.value);
@@ -90,6 +91,7 @@ export const InsertLinkButton = (props: InsertLinkButtonProps) => {
               name="rt-linkTextInput"
               placeholder="Text"
               className="rt-input"
+              type="text"
               onClick={(e) => e.stopPropagation()}
               onChange={(e) => {
                 setLinkText(e.target.value);
@@ -99,6 +101,7 @@ export const InsertLinkButton = (props: InsertLinkButtonProps) => {
           </div>
           <button
             className="rt-button"
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               handleLinkStyleChange();
