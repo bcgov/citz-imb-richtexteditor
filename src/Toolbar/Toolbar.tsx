@@ -28,13 +28,16 @@ export const Toolbar = (props: ToolbarProps) => {
     setContent,
     undoStack,
     setUndoStack,
+    parentNodeName,
   } = props;
 
   return (
     <div className="rt-toolbar">
       {/* BOLD */}
       <button
-        className="rt-button"
+        className={`rt-button ${
+          parentNodeName === "B" ? "rt-button-active" : ""
+        }`}
         disabled={readOnly}
         onClick={() =>
           toggleStyle({
@@ -52,7 +55,9 @@ export const Toolbar = (props: ToolbarProps) => {
 
       {/* ITALICS */}
       <button
-        className="rt-button"
+        className={`rt-button ${
+          parentNodeName === "I" ? "rt-button-active" : ""
+        }`}
         disabled={readOnly}
         onClick={() =>
           toggleStyle({
@@ -71,7 +76,9 @@ export const Toolbar = (props: ToolbarProps) => {
       </button>
       {/* STRIKETHROUGH */}
       <button
-        className="rt-button"
+        className={`rt-button ${
+          parentNodeName === "S" ? "rt-button-active" : ""
+        }`}
         disabled={readOnly}
         onClick={() =>
           toggleStyle({
@@ -93,6 +100,7 @@ export const Toolbar = (props: ToolbarProps) => {
         readOnly={readOnly}
         contentRef={contentRef}
         handleChange={() => handleChange({ contentRef, content, setContent })}
+        parentNodeName={parentNodeName}
       />
       {/* HIGHLIGHTER */}
       <button
