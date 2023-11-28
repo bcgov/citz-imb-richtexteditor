@@ -4,11 +4,22 @@ import { Dispatch, MutableRefObject, ReactNode, SetStateAction } from "react";
  * PROPS
  */
 
-export type RichTextEditorProps = {
+type RichTextEditorPropsDefault = {
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
-  readOnly?: boolean;
+  readOnly?: false;
 };
+
+// Allow setContent to be undefined when readOnly mode is true
+type RichTextEditorPropsReadOnly = {
+  content: string;
+  setContent?: Dispatch<SetStateAction<string>>;
+  readOnly: true;
+};
+
+export type RichTextEditorProps =
+  | RichTextEditorPropsDefault
+  | RichTextEditorPropsReadOnly;
 
 export type ToolbarProps = {
   readOnly?: boolean;
