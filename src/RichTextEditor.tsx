@@ -1,11 +1,19 @@
 import "./styles.css";
 import React, { useRef, useEffect, useState } from "react";
 import { RichTextEditorProps } from "./types";
-import { handleChange, handleKeyDown, undoAction } from "./utils";
+import {
+  getParentElement,
+  handleChange,
+  handleKeyDown,
+  undoAction,
+} from "./utils";
 import { Toolbar } from "./Toolbar";
 
 export const RichTextEditor = (props: RichTextEditorProps) => {
   const { content, setContent, readOnly = false } = props;
+
+  // Track which element the cursor is in
+  const [parentElement, setParentElement] = useState<HTMLElement | null>(null);
 
   // Using useRef hook to get a direct reference to the contentEditable div
   const contentRef = useRef<HTMLDivElement>(null);
@@ -22,13 +30,26 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
       // Track readOnly property changes
       contentRef.current.contentEditable = String(!readOnly);
 
+      // Update parentElement when content changes.
+      // Used for toggling active buttons
+      const parentElement = getParentElement({ contentRef });
+      setParentElement(parentElement);
+
       // Add change to undo stack
       setUndoStack((prev) => [...prev, content]);
     }
   }, [content, readOnly]);
 
   return (
-    <div className="rt-container">
+    <div
+      className="rt-container"
+      onClick={() => {
+        // Update parentElement.
+        // Used for toggling active buttons
+        const parentElement = getParentElement({ contentRef });
+        setParentElement(parentElement);
+      }}
+    >
       <Toolbar
         contentRef={contentRef}
         content={content}
@@ -36,6 +57,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         readOnly={readOnly}
         undoStack={undoStack}
         setUndoStack={setUndoStack}
+        parentElement={parentElement}
       />
       <div
         ref={contentRef}

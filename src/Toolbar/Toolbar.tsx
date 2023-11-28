@@ -28,13 +28,16 @@ export const Toolbar = (props: ToolbarProps) => {
     setContent,
     undoStack,
     setUndoStack,
+    parentElement,
   } = props;
 
   return (
     <div className="rt-toolbar">
       {/* BOLD */}
       <button
-        className="rt-button"
+        className={`rt-button ${
+          parentElement?.nodeName === "B" ? "rt-button-active" : ""
+        }`}
         disabled={readOnly}
         onClick={() =>
           toggleStyle({
@@ -52,7 +55,9 @@ export const Toolbar = (props: ToolbarProps) => {
 
       {/* ITALICS */}
       <button
-        className="rt-button"
+        className={`rt-button ${
+          parentElement?.nodeName === "I" ? "rt-button-active" : ""
+        }`}
         disabled={readOnly}
         onClick={() =>
           toggleStyle({
@@ -71,7 +76,9 @@ export const Toolbar = (props: ToolbarProps) => {
       </button>
       {/* STRIKETHROUGH */}
       <button
-        className="rt-button"
+        className={`rt-button ${
+          parentElement?.nodeName === "S" ? "rt-button-active" : ""
+        }`}
         disabled={readOnly}
         onClick={() =>
           toggleStyle({
@@ -93,10 +100,15 @@ export const Toolbar = (props: ToolbarProps) => {
         readOnly={readOnly}
         contentRef={contentRef}
         handleChange={() => handleChange({ contentRef, content, setContent })}
+        parentElement={parentElement}
       />
       {/* HIGHLIGHTER */}
       <button
-        className="rt-button"
+        className={`rt-button ${
+          parentElement?.className.includes("rt-yellowHighlight")
+            ? "rt-button-active"
+            : ""
+        }`}
         disabled={readOnly}
         onClick={() =>
           toggleStyle({
@@ -118,7 +130,11 @@ export const Toolbar = (props: ToolbarProps) => {
       </button>
       {/* BULLET LIST */}
       <button
-        className="rt-button"
+        className={`rt-button ${
+          parentElement?.parentElement?.nodeName === "UL"
+            ? "rt-button-active"
+            : ""
+        }`}
         disabled={readOnly}
         onClick={() =>
           toggleListStyle({
@@ -139,7 +155,11 @@ export const Toolbar = (props: ToolbarProps) => {
       </button>
       {/* NUMBERED LIST */}
       <button
-        className="rt-button"
+        className={`rt-button ${
+          parentElement?.parentElement?.nodeName === "OL"
+            ? "rt-button-active"
+            : ""
+        }`}
         disabled={readOnly}
         onClick={() =>
           toggleListStyle({
