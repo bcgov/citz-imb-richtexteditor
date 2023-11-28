@@ -17,14 +17,14 @@ export type ToolbarProps = {
   setContent: Dispatch<SetStateAction<string>>;
   undoStack: string[];
   setUndoStack: Dispatch<SetStateAction<string[]>>;
-  parentNodeName: string;
+  parentElement: HTMLElement | null;
 };
 
 export type FontSizeButtonProps = {
   readOnly?: boolean;
   contentRef: MutableRefObject<HTMLDivElement>;
   handleChange: () => void;
-  parentNodeName: string;
+  parentElement: HTMLElement | null;
 };
 
 export type InsertLinkButtonProps = {

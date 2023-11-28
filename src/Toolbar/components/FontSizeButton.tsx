@@ -5,7 +5,7 @@ import { FontSizeIcon, FontSizeIconDisabled, TextIcon } from "../../assets";
 import { Tooltip } from "./Tooltip";
 
 export const FontSizeButton = (props: FontSizeButtonProps) => {
-  const { readOnly = false, contentRef, handleChange, parentNodeName } = props;
+  const { readOnly = false, contentRef, handleChange, parentElement } = props;
 
   // State to manage popover visibility
   const [showPopover, setShowPopover] = useState(false);
@@ -36,7 +36,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
         <div className="rt-headerPopover">
           <button
             className={`rt-button ${
-              parentNodeName === "H1" ? "rt-button-active" : ""
+              parentElement?.nodeName === "H1" ? "rt-button-active" : ""
             }`}
             onClick={() => {
               handleHeaderStyleChange("H1");
@@ -51,7 +51,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
           </button>
           <button
             className={`rt-button ${
-              parentNodeName === "H2" ? "rt-button-active" : ""
+              parentElement?.nodeName === "H2" ? "rt-button-active" : ""
             }`}
             onClick={() => {
               handleHeaderStyleChange("H2");
@@ -66,7 +66,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
           </button>
           <button
             className={`rt-button ${
-              parentNodeName === "H3" ? "rt-button-active" : ""
+              parentElement?.nodeName === "H3" ? "rt-button-active" : ""
             }`}
             onClick={() => {
               handleHeaderStyleChange("H3");
