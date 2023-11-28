@@ -45,8 +45,11 @@ export const Toolbar = (props: ToolbarProps) => {
           })
         }
       >
-        <b>B</b>
+        <Tooltip content="Bold">
+          <b>B</b>
+        </Tooltip>
       </button>
+
       {/* ITALICS */}
       <button
         className="rt-button"
@@ -60,9 +63,11 @@ export const Toolbar = (props: ToolbarProps) => {
           })
         }
       >
-        <b>
-          <i>I</i>
-        </b>
+        <Tooltip content="Italics">
+          <b>
+            <i>I</i>
+          </b>
+        </Tooltip>
       </button>
       {/* STRIKETHROUGH */}
       <button
@@ -77,9 +82,11 @@ export const Toolbar = (props: ToolbarProps) => {
           })
         }
       >
-        <b>
-          <s>S</s>
-        </b>
+        <Tooltip content="Strikethrough">
+          <b>
+            <s>S</s>
+          </b>
+        </Tooltip>
       </button>
       {/* FONT SIZE */}
       <FontSizeButton
@@ -101,11 +108,13 @@ export const Toolbar = (props: ToolbarProps) => {
           })
         }
       >
-        <img
-          src={!readOnly ? HighlighterIcon : HighlighterIconDisabled}
-          alt="Highlighter Icon"
-          className="rt-icon"
-        />
+        <Tooltip content="Highlight">
+          <img
+            src={!readOnly ? HighlighterIcon : HighlighterIconDisabled}
+            alt="Highlighter Icon"
+            className="rt-icon"
+          />
+        </Tooltip>
       </button>
       {/* BULLET LIST */}
       <button
@@ -120,11 +129,13 @@ export const Toolbar = (props: ToolbarProps) => {
           })
         }
       >
-        <img
-          src={!readOnly ? ListIcon : ListIconDisabled}
-          alt="List Icon"
-          className="rt-icon"
-        />
+        <Tooltip content="Bulleted List">
+          <img
+            src={!readOnly ? ListIcon : ListIconDisabled}
+            alt="List Icon"
+            className="rt-icon"
+          />
+        </Tooltip>
       </button>
       {/* NUMBERED LIST */}
       <button
@@ -139,11 +150,13 @@ export const Toolbar = (props: ToolbarProps) => {
           })
         }
       >
-        <img
-          src={!readOnly ? NumberedListIcon : NumberedListIconDisabled}
-          alt="Numbered List Icon"
-          className="rt-icon"
-        />
+        <Tooltip content="Numbered List">
+          <img
+            src={!readOnly ? NumberedListIcon : NumberedListIconDisabled}
+            alt="Numbered List Icon"
+            className="rt-icon"
+          />
+        </Tooltip>
       </button>
       {/* INSERT LINK */}
       <InsertLinkButton
@@ -163,11 +176,13 @@ export const Toolbar = (props: ToolbarProps) => {
           })
         }
       >
-        <img
-          src={!readOnly ? UndoIcon : UndoIconDisabled}
-          alt="Undo Icon"
-          className="rt-icon"
-        />
+        <Tooltip content="Undo">
+          <img
+            src={!readOnly ? UndoIcon : UndoIconDisabled}
+            alt="Undo Icon"
+            className="rt-icon"
+          />
+        </Tooltip>
       </button>
     </div>
   );

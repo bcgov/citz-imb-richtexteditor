@@ -169,6 +169,7 @@
 .rt-tooltip-content {
   position: absolute;
   width: fit-content;
+  white-space: nowrap;
   min-height: 1.1em;
   left: 50%;
   transform: translateX(-50%);

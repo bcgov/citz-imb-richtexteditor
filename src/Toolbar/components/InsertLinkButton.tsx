@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { InsertLinkButtonProps, SelectionContext } from "../../types";
 import { InsertIcon, LinkIcon, LinkIconDisabled } from "../../assets";
 import { getSelectionContext, handleKeyDown, toggleStyle } from "../../utils";
+import { Tooltip } from "./Tooltip";
 
 export const InsertLinkButton = (props: InsertLinkButtonProps) => {
   const { readOnly = false, contentRef, handleChange } = props;
@@ -60,11 +61,13 @@ export const InsertLinkButton = (props: InsertLinkButtonProps) => {
   return (
     <>
       <button className="rt-button" disabled={readOnly} onClick={togglePopover}>
-        <img
-          src={!readOnly ? LinkIcon : LinkIconDisabled}
-          alt="Link Icon"
-          className="rt-icon"
-        />
+        <Tooltip content="Insert Link">
+          <img
+            src={!readOnly ? LinkIcon : LinkIconDisabled}
+            alt="Link Icon"
+            className="rt-icon"
+          />
+        </Tooltip>
       </button>
       {/* Popover */}
       {showPopover && !readOnly && (
@@ -101,7 +104,9 @@ export const InsertLinkButton = (props: InsertLinkButtonProps) => {
               handleLinkStyleChange();
             }}
           >
-            <img src={InsertIcon} alt="Insert Icon" className="rt-icon" />
+            <Tooltip content="Insert">
+              <img src={InsertIcon} alt="Insert Icon" className="rt-icon" />
+            </Tooltip>
           </button>
         </div>
       )}
