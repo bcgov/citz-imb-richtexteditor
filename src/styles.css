@@ -154,3 +154,59 @@
 .rt-input:focus {
   border-color: rgb(40, 127, 226);
 }
+
+/* 
+ TOOLTIP Styles
+*/
+
+.rt-tooltip-container {
+  position: relative;
+  display: inline-block;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.rt-tooltip-content {
+  position: absolute;
+  width: fit-content;
+  white-space: nowrap;
+  min-height: 1.1em;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px; /* distance from the trigger element */
+  padding: 3px;
+  background-color: #1a5a96;
+  color: white;
+  border-radius: 4px;
+  z-index: 1000;
+  opacity: 1;
+}
+
+.rt-tooltip-content::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #1a5a96 transparent transparent transparent;
+}
+
+/* Bottom Direction */
+.rt-tooltip-bottom .rt-tooltip-content {
+  top: 100%; /* Position below the trigger element */
+  transform: translateX(-50%);
+  margin-top: 4px; /* Adjust the distance from the trigger element */
+}
+
+.rt-tooltip-bottom .rt-tooltip-content::before {
+  content: '';
+  position: absolute;
+  top: -40%; /* Position above the tooltip content */
+  left: 50%; /* Center horizontally with respect to the trigger element */
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent #1a5a96 transparent; /* Adjust the border-color for the arrow */
+}

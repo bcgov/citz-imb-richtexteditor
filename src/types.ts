@@ -1,4 +1,4 @@
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
+import { Dispatch, MutableRefObject, ReactNode, SetStateAction } from "react";
 
 /**
  * PROPS
@@ -108,4 +108,9 @@ export type SelectionContext = {
   currentNode: Node | null;
   selection: Selection | null;
   range: Range | null;
+};
+
+export type TooltipProps = {
+  children?: ReactNode;
+  content?: string;
 };

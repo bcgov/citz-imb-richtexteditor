@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontSizeButtonProps } from "../../types";
 import { removeHeadersFromSelection, toggleHeaderStyle } from "../../utils";
 import { FontSizeIcon, FontSizeIconDisabled, TextIcon } from "../../assets";
+import { Tooltip } from "./Tooltip";
 
 export const FontSizeButton = (props: FontSizeButtonProps) => {
   const { readOnly = false, contentRef, handleChange } = props;
@@ -22,11 +23,13 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
         disabled={readOnly}
         onClick={() => setShowPopover(!showPopover)}
       >
-        <img
-          src={!readOnly ? FontSizeIcon : FontSizeIconDisabled}
-          alt="Font Size Icon"
-          className="rt-icon"
-        />
+        <Tooltip content="Font Size">
+          <img
+            src={!readOnly ? FontSizeIcon : FontSizeIconDisabled}
+            alt="Font Size Icon"
+            className="rt-icon"
+          />
+        </Tooltip>
       </button>
       {/* Popover */}
       {showPopover && !readOnly && (
@@ -38,9 +41,11 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
               setShowPopover(!showPopover);
             }}
           >
-            <b>
-              H<sup>1</sup>
-            </b>
+            <Tooltip content="Header 1">
+              <b>
+                H<sub>1</sub>
+              </b>
+            </Tooltip>
           </button>
           <button
             className="rt-button"
@@ -49,9 +54,11 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
               setShowPopover(!showPopover);
             }}
           >
-            <b>
-              H<sup>2</sup>
-            </b>
+            <Tooltip content="Header 2">
+              <b>
+                H<sub>2</sub>
+              </b>
+            </Tooltip>
           </button>
           <button
             className="rt-button"
@@ -60,9 +67,11 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
               setShowPopover(!showPopover);
             }}
           >
-            <b>
-              H<sup>3</sup>
-            </b>
+            <Tooltip content="Header 3">
+              <b>
+                H<sub>3</sub>
+              </b>
+            </Tooltip>
           </button>
           <button
             className="rt-button"
@@ -72,7 +81,9 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
               setShowPopover(!showPopover);
             }}
           >
-            <img className="rt-icon" src={TextIcon} alt="Text Icon" />
+            <Tooltip content="Reset">
+              <img className="rt-icon" src={TextIcon} alt="Text Icon" />
+            </Tooltip>
           </button>
         </div>
       )}
