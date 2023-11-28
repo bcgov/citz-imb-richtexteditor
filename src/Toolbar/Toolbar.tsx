@@ -39,6 +39,7 @@ export const Toolbar = (props: ToolbarProps) => {
           parentElement?.nodeName === "B" ? "rt-button-active" : ""
         }`}
         disabled={readOnly}
+        type="button"
         onClick={() =>
           toggleStyle({
             contentRef,
@@ -59,6 +60,7 @@ export const Toolbar = (props: ToolbarProps) => {
           parentElement?.nodeName === "I" ? "rt-button-active" : ""
         }`}
         disabled={readOnly}
+        type="button"
         onClick={() =>
           toggleStyle({
             contentRef,
@@ -80,6 +82,7 @@ export const Toolbar = (props: ToolbarProps) => {
           parentElement?.nodeName === "S" ? "rt-button-active" : ""
         }`}
         disabled={readOnly}
+        type="button"
         onClick={() =>
           toggleStyle({
             contentRef,
@@ -110,6 +113,7 @@ export const Toolbar = (props: ToolbarProps) => {
             : ""
         }`}
         disabled={readOnly}
+        type="button"
         onClick={() =>
           toggleStyle({
             contentRef,
@@ -136,6 +140,7 @@ export const Toolbar = (props: ToolbarProps) => {
             : ""
         }`}
         disabled={readOnly}
+        type="button"
         onClick={() =>
           toggleListStyle({
             contentRef,
@@ -161,6 +166,7 @@ export const Toolbar = (props: ToolbarProps) => {
             : ""
         }`}
         disabled={readOnly}
+        type="button"
         onClick={() =>
           toggleListStyle({
             contentRef,
@@ -188,6 +194,7 @@ export const Toolbar = (props: ToolbarProps) => {
       <button
         className="rt-button"
         disabled={readOnly}
+        type="button"
         onClick={() =>
           undoAction({
             undoStack,
