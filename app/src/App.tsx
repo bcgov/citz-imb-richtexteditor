@@ -5,6 +5,7 @@ import { RichTextEditor } from "../../src/RichTextEditor";
 function App() {
   const [content, setContent] = useState("");
   const [readOnly, setReadOnly] = useState(false);
+  const [textOnlyReadOnly, setTextOnlyReadOnly] = useState(false);
 
   return (
     <div className="main">
@@ -13,10 +14,15 @@ function App() {
         content={content}
         setContent={setContent}
         readOnly={readOnly}
+        textOnlyReadOnly={textOnlyReadOnly}
       />
       <br />
       <p>{content}</p>
       <button onClick={() => setReadOnly(!readOnly)}>Toggle ReadOnly</button>
+      <br />
+      <button onClick={() => setTextOnlyReadOnly(!textOnlyReadOnly)}>
+        Toggle TextOnlyReadOnly
+      </button>
     </div>
   );
 }

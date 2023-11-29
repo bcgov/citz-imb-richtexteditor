@@ -10,7 +10,12 @@ import {
 import { Toolbar } from "./Toolbar";
 
 export const RichTextEditor = (props: RichTextEditorProps) => {
-  const { content, setContent, readOnly = false } = props;
+  const {
+    content,
+    setContent,
+    readOnly = false,
+    textOnlyReadOnly = false,
+  } = props;
 
   // Track which element the cursor is in
   const [parentElement, setParentElement] = useState<HTMLElement | null>(null);
@@ -50,15 +55,17 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
         setParentElement(parentElement);
       }}
     >
-      <Toolbar
-        contentRef={contentRef}
-        content={content}
-        setContent={setContent}
-        readOnly={readOnly}
-        undoStack={undoStack}
-        setUndoStack={setUndoStack}
-        parentElement={parentElement}
-      />
+      {!(readOnly && textOnlyReadOnly) && (
+        <Toolbar
+          contentRef={contentRef}
+          content={content}
+          setContent={setContent}
+          readOnly={readOnly}
+          undoStack={undoStack}
+          setUndoStack={setUndoStack}
+          parentElement={parentElement}
+        />
+      )}
       <div
         ref={contentRef}
         contentEditable={true}
@@ -73,7 +80,9 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
               undoAction({ undoStack, setUndoStack, setContent }),
           })
         }
-        className="rt-content"
+        className={`${
+          readOnly && textOnlyReadOnly ? "rt-content-textOnly" : "rt-content"
+        }`}
       />
     </div>
   );

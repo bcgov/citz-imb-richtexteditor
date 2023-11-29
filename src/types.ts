@@ -8,6 +8,7 @@ type RichTextEditorPropsDefault = {
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
   readOnly?: false;
+  textOnlyReadOnly?: boolean;
 };
 
 // Allow setContent to be undefined when readOnly mode is true
@@ -15,6 +16,7 @@ type RichTextEditorPropsReadOnly = {
   content: string;
   setContent?: Dispatch<SetStateAction<string>>;
   readOnly: true;
+  textOnlyReadOnly?: boolean;
 };
 
 export type RichTextEditorProps =
