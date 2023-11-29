@@ -59,6 +59,19 @@
   background-color: #fff;
 }
 
+.rt-content-textOnly {
+  outline: none;
+  min-height: 150px;
+  white-space: pre-wrap;
+  position: relative;
+  width: calc(100% - 10px);
+  top: 0;
+  border: none;
+  left: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
 /* Pseudo-element to cover the top part of .content */
 .rt-content::before {
   content: '';
