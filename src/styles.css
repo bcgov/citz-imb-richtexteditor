@@ -61,7 +61,7 @@
 
 .rt-content-textOnly {
   outline: none;
-  min-height: 150px;
+  min-height: 20px;
   white-space: pre-wrap;
   position: relative;
   width: calc(100% - 10px);
