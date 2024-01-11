@@ -10,12 +10,14 @@ function App() {
   return (
     <div className="main">
       <h1>RichTextEditor</h1>
-      <RichTextEditor
-        content={content}
-        setContent={setContent}
-        readOnly={readOnly}
-        textOnlyReadOnly={textOnlyReadOnly}
-      />
+      <div className="richtextcontainer">
+        <RichTextEditor
+          content={content}
+          setContent={setContent}
+          readOnly={readOnly}
+          textOnlyReadOnly={textOnlyReadOnly}
+        />
+      </div>
       <br />
       <p>{content}</p>
       <button onClick={() => setReadOnly(!readOnly)}>Toggle ReadOnly</button>

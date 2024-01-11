@@ -3,8 +3,8 @@
 }
 
 .rt-container {
-  width: 100%;
-  padding: 0;
+  width: 98%;
+  padding: 5px;
 }
 
 .rt-toolbar {
@@ -31,6 +31,7 @@
   cursor: pointer;
   font-family: 'Times New Roman';
   line-height: normal;
+  text-align: center;
 }
 
 .rt-button:hover {
@@ -75,7 +76,7 @@
 /* Pseudo-element to cover the top part of .content */
 .rt-content::before {
   content: '';
-  position: fixed;
+  position: relative;
   top: 6px;
   border-radius: 5px;
   left: 9px;
@@ -83,6 +84,10 @@
   height: 40px; /* Height of the area to hide */
   background-color: #fff; /* Match the background color of the editor */
   z-index: 2; /* Ensure it's above the content */
+}
+
+.rt-toolbar b {
+  font-weight: 700;
 }
 
 .rt-content p {

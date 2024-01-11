@@ -3,13 +3,9 @@ import { ToolbarProps } from "../types";
 import { FontSizeButton } from "./components/FontSizeButton";
 import {
   HighlighterIcon,
-  HighlighterIconDisabled,
   ListIcon,
-  ListIconDisabled,
   NumberedListIcon,
-  NumberedListIconDisabled,
   UndoIcon,
-  UndoIconDisabled,
 } from "../assets";
 import { InsertLinkButton } from "./components/InsertLinkButton";
 import {
@@ -125,11 +121,7 @@ export const Toolbar = (props: ToolbarProps) => {
         }
       >
         <Tooltip content="Highlight">
-          <img
-            src={!readOnly ? HighlighterIcon : HighlighterIconDisabled}
-            alt="Highlighter Icon"
-            className="rt-icon"
-          />
+          <HighlighterIcon disabled={readOnly} />
         </Tooltip>
       </button>
       {/* BULLET LIST */}
@@ -151,11 +143,7 @@ export const Toolbar = (props: ToolbarProps) => {
         }
       >
         <Tooltip content="Bulleted List">
-          <img
-            src={!readOnly ? ListIcon : ListIconDisabled}
-            alt="List Icon"
-            className="rt-icon"
-          />
+          <ListIcon disabled={readOnly} />
         </Tooltip>
       </button>
       {/* NUMBERED LIST */}
@@ -177,11 +165,7 @@ export const Toolbar = (props: ToolbarProps) => {
         }
       >
         <Tooltip content="Numbered List">
-          <img
-            src={!readOnly ? NumberedListIcon : NumberedListIconDisabled}
-            alt="Numbered List Icon"
-            className="rt-icon"
-          />
+          <NumberedListIcon disabled={readOnly} />
         </Tooltip>
       </button>
       {/* INSERT LINK */}
@@ -204,11 +188,7 @@ export const Toolbar = (props: ToolbarProps) => {
         }
       >
         <Tooltip content="Undo">
-          <img
-            src={!readOnly ? UndoIcon : UndoIconDisabled}
-            alt="Undo Icon"
-            className="rt-icon"
-          />
+          <UndoIcon disabled={readOnly} />
         </Tooltip>
       </button>
     </div>

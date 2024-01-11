@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FontSizeButtonProps } from "../../types";
 import { removeHeadersFromSelection, toggleHeaderStyle } from "../../utils";
-import { FontSizeIcon, FontSizeIconDisabled, TextIcon } from "../../assets";
+import { FontSizeIcon, TextIcon } from "../../assets";
 import { Tooltip } from "./Tooltip";
 
 export const FontSizeButton = (props: FontSizeButtonProps) => {
@@ -25,11 +25,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
         onClick={() => setShowPopover(!showPopover)}
       >
         <Tooltip content="Font Size">
-          <img
-            src={!readOnly ? FontSizeIcon : FontSizeIconDisabled}
-            alt="Font Size Icon"
-            className="rt-icon"
-          />
+          <FontSizeIcon disabled={readOnly} />
         </Tooltip>
       </button>
       {/* Popover */}
@@ -93,7 +89,7 @@ export const FontSizeButton = (props: FontSizeButtonProps) => {
             }}
           >
             <Tooltip content="Reset">
-              <img className="rt-icon" src={TextIcon} alt="Text Icon" />
+              <TextIcon />
             </Tooltip>
           </button>
         </div>

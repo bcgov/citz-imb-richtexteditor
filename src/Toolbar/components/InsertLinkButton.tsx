@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { InsertLinkButtonProps, SelectionContext } from "../../types";
-import { InsertIcon, LinkIcon, LinkIconDisabled } from "../../assets";
+import { InsertIcon, LinkIcon } from "../../assets";
 import { getSelectionContext, toggleStyle } from "../../utils";
 import { Tooltip } from "./Tooltip";
 
@@ -62,11 +62,7 @@ export const InsertLinkButton = (props: InsertLinkButtonProps) => {
     <>
       <button className="rt-button" disabled={readOnly} onClick={togglePopover}>
         <Tooltip content="Insert Link">
-          <img
-            src={!readOnly ? LinkIcon : LinkIconDisabled}
-            alt="Link Icon"
-            className="rt-icon"
-          />
+          <LinkIcon disabled={readOnly} />
         </Tooltip>
       </button>
       {/* Popover */}
@@ -108,7 +104,7 @@ export const InsertLinkButton = (props: InsertLinkButtonProps) => {
             }}
           >
             <Tooltip content="Insert">
-              <img src={InsertIcon} alt="Insert Icon" className="rt-icon" />
+              <InsertIcon />
             </Tooltip>
           </button>
         </div>
