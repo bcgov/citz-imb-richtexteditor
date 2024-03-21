@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rich-text-editor-guide
+  title: Rich Text Editor Guide
+  description: How to install and setup rich text editor
+  annotations:
+    github.com/project-slug: bcgov/citz-imb-richtexteditor
+    backstage.io/techdocs-ref: dir:.
+    bcgovpubcode.gov.bc.ca/ministry: CITZ
+    bcgovpubcode.gov.bc.ca/product_name: Rich Text Editor
+    bcgovpubcode.gov.bc.ca/product_acronym: RTE
+    bcgovpubcode.gov.bc.ca/product_owner: Sylar Zhang
+    developer.gov.bc.ca/source_template: default/docs-template-v2
+spec:
+  type: documentation
+  lifecycle: experimental
+  owner: group:default/citz-imb-common-code

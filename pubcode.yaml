@@ -1,0 +1,11 @@
+version: 1
+data_management_roles:
+  product_owner: Sylar Zhang
+product_information:
+  ministry: CITZ
+  product_acronym: RTE
+  product_description: How to install and setup rich text editor
+  product_name: Rich Text Editor
+  program_area: 
+product_technology_information:
+  hosting_platforms: Private-Cloud-Openshift
